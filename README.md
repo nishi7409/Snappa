@@ -1,0 +1,1 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/nishi7409/snappa/badge)](https://www.codefactor.io/repository/github/nishi7409/snappa)
