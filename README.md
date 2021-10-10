@@ -1,8 +1,10 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/nishi7409/snappa/badge)](https://www.codefactor.io/repository/github/nishi7409/snappa)
 
 
-# Snappa 🎲🥤
-<!-- ![Snappa Image]() -->
+<h1 align="center">Snappa 🎲🥤</h1>
+<!-- <p align="center">
+    <img width="460" height="300" src="http://www.fillmurray.com/460/300">
+</p> -->
 
 ## Developers
 - Nishant Srivastava
