@@ -2,3 +2,4 @@ node_modules
 venv
 .vscode
 *.sqlite3
+frontend/package-lock.json
