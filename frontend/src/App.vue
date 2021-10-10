@@ -1,10 +1,23 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <v-app-bar dense>
+      <v-toolbar-title>All Things Snappa</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn>
+        <router-link to="/auth/sign-up">Sign Up</router-link>
+      </v-btn>
+      <v-btn>
+        <router-link to="/auth/login">Login</router-link>
+      </v-btn>
+    </v-app-bar>
     <router-view/>
   </div>
 </template>
 
+<style>
+/* https://stackoverflow.com/questions/45598884/change-default-font-in-vuetify */
+#app {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+</style>
