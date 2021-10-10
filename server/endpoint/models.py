@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models.fields import UUIDField
 
-
 class User(models.Model):
     id = models.UUIDField(blank=False, null=False, primary_key=True, default=UUIDField.uuid4, editable=False)
     firstName = models.CharField(blank=False, null=False, editable=True)
