@@ -1,4 +1,5 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/nishi7409/snappa/badge)](https://www.codefactor.io/repository/github/nishi7409/snappa)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/21ca5d11-14f6-4ebb-a537-fa5c2a5a5524/deploy-status)](https://app.netlify.com/sites/snappa-rpi/deploys)
 <h1 align="center">🥤🎲 All Things Snappa 🎲🥤</h1>
 <!-- <p align="center">
     <img width="460" height="300" src="http://www.fillmurray.com/460/300">
