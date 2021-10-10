@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-      <v-container>
+    <v-container>
     <v-row>
-      <h1>Hi</h1>
+      <h1>Main home page</h1>
     </v-row>    
   </v-container>
   </div>
