@@ -4,17 +4,11 @@
       <v-toolbar-title>All Things Snappa</v-toolbar-title>
       <v-spacer></v-spacer>
       <div id="loggedIn" v-if="sessionKey !== 'NONE'">  
-        <v-btn v-on:click="logout()">
-          <router-link to="">Log Out</router-link>
-        </v-btn>
+        <v-btn v-on:click="logout()">Log Out</v-btn>
       </div>
       <div id="notLoggedIn" v-else>
-        <v-btn >
-          <router-link to="/auth/sign-up">Sign Up</router-link>
-        </v-btn>
-        <v-btn>
-          <router-link to="/auth/login">Login</router-link>
-        </v-btn>  
+        <v-btn to="/auth/sign-up">Sign Up</v-btn>
+        <v-btn to="/auth/login">Login</v-btn>  
       </div>
     </v-app-bar>
     <notifications position="top center" group="login"/>
