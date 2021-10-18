@@ -10,36 +10,55 @@ import PageNotFound from "../views/404.vue";
 
 Vue.use(VueRouter)
 
+
 const routes = [
   {
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/auth/sign-up",
     name: "Sign Up",
     component: SignUp,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/auth/login",
     name: "Login",
     component: Login,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/dashboard/profile/:id",
     name: "Profile",
     component: Profile,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/admin",
     name: "Admin",
     component: Admin,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "*",
@@ -53,5 +72,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
 
 export default router

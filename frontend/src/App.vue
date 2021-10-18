@@ -10,6 +10,10 @@
         <router-link to="/auth/login">Login</router-link>
       </v-btn>
     </v-app-bar>
+    <notifications position="top center" group="login"/>
+    <notifications group="registration"/>
+    <notifications group="client"/>
+    <notifications group="server"/>
     <router-view/>
   </div>
 </template>
