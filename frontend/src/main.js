@@ -8,8 +8,10 @@ import Notifications from 'vue-notification'
 Vue.config.productionTip = false
 Vue.use(Notifications);
 
-// localStorage.setItem("loggedIn", false);
-// localStorage.setItem("token", "NONE");
+if (!localStorage.getItem('loggedIn')) {
+  localStorage.setItem("loggedIn", false);
+  localStorage.setItem("token", "NONE");
+}
 
 new Vue({
   vuetify,

@@ -17,54 +17,64 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
-      requiresAuth: false
-    }
+      requiresAuth: false,
+      disableRouteIfLoggedIn: false,
+    },
   },
   {
     path: "/auth/sign-up",
     name: "Sign Up",
     component: SignUp,
     meta: {
-      requiresAuth: false
-    }
+      requiresAuth: false,
+      disableRouteIfLoggedIn: true,
+    },
   },
   {
     path: "/auth/login",
     name: "Login",
     component: Login,
     meta: {
-      requiresAuth: false
-    }
+      requiresAuth: false,
+      disableRouteIfLoggedIn: true,
+    },
   },
   {
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+      disableRouteIfLoggedIn: false,
+    },
   },
   {
     path: "/dashboard/profile/:id",
     name: "Profile",
     component: Profile,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+      disableRouteIfLoggedIn: false,
+    },
   },
   {
     path: "/admin",
     name: "Admin",
     component: Admin,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+      disableRouteIfLoggedIn: false,
+    },
   },
   {
     path: "*",
     name: "404 Error",
     component: PageNotFound,
-  }
+    meta: {
+      requiresAuth: false,
+      disableRouteIfLoggedIn: false,
+    },
+  },
 ];
 
 const router = new VueRouter({
@@ -73,13 +83,19 @@ const router = new VueRouter({
   routes
 })
 
-// why isn't this working!!! -- ik why
+// routing works (dependent on auth or not)
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (localStorage["token"] == "NONE" || localStorage["loggedIn"] == false) {
-      window.location.href = "/auth/login"
+      window.location.href = "/auth/login";
     } else {
-      next()
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.disableRouteIfLoggedIn)) {
+    if (localStorage["token"] !== "NONE" || localStorage["loggedIn"] == true) {
+      window.location.href = "/dashboard";
+    } else {
+      next();
     }
   } else {
     next()
