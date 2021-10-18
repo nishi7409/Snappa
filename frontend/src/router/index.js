@@ -73,7 +73,7 @@ const router = new VueRouter({
   routes
 })
 
-// // why isn't this working!!! -- its because
+// // why isn't this working!!! -- ik why
 // router.beforeEach((to, from, next) => {
 //   if (to.matched.some(record => record.meta.requiresAuth)) {
 //     if (localStorage["token"] == "NONE" || localStorage["loggedIn"] == false) {
