@@ -3,12 +3,19 @@
     <v-app-bar dense>
       <v-toolbar-title>All Things Snappa</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn>
-        <router-link to="/auth/sign-up">Sign Up</router-link>
-      </v-btn>
-      <v-btn>
-        <router-link to="/auth/login">Login</router-link>
-      </v-btn>
+      <div id="loggedIn" v-if="sessionKey">  
+        <v-btn>
+          <router-link to="">Log Out</router-link>
+        </v-btn>
+      </div>
+      <div id="notLoggedIn" v-else>
+        <v-btn >
+          <router-link to="/auth/sign-up">Sign Up</router-link>
+        </v-btn>
+        <v-btn>
+          <router-link to="/auth/login">Login</router-link>
+        </v-btn>
+      </div>
     </v-app-bar>
     <notifications position="top center" group="login"/>
     <notifications group="registration"/>
@@ -25,3 +32,16 @@
 }
 
 </style>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  name: 'Login',
+  computed: {
+    ...mapState({
+        sessionKey: 'token',
+    })
+  }
+};
+</script>
