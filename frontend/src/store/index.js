@@ -7,14 +7,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         loggedIn: false,
-        token: "NONE",
+        token: localStorage.getItem('token') || ''
     },
     getters: {
 
     },
     actions: {
-        login(context) {
-            context.commit('login')
+        login(context, payload) {
+            context.commit('login', payload)
         },
         register(context) {
             context.commit('register')
@@ -24,10 +24,10 @@ export default new Vuex.Store({
         },
     },
     mutations: {
-        login(state) {
+        login(state, payload) {
             axios.post("http://127.0.0.1:8000/rest-auth/login/", {
-                username: 'admin',
-                password: 'password'
+                username: payload.username,
+                password: payload.password
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,6 +36,8 @@ export default new Vuex.Store({
                 if (response.status == 200) {
                     state.loggedIn = true;
                     state.token = response.data.key;
+                    localStorage.setItem("token", response.data.key);
+                    localStorage.setItem("loggedIn", true);
                     Vue.notify({
                         position: "top center",
                         group: "login",
@@ -47,33 +49,36 @@ export default new Vuex.Store({
                     }, 1000)
                 }
             }).catch(function (error) {
+                console.log(error.response)
                 if (error.response) {
-                    Vue.notify({
+                    Vue.notify({    
                         position: "top center",
                         group: "login",
-                        text: "Enter error information here 😔",
+                        text: `${error.response.data.non_field_errors[0]}` + " 😔",
                         type: "error",
                     });
                 } else if (error.request) {
                     Vue.notify({
                         position: "top center",
                         group: "login",
-                        text: "Enter error information here 😔",
+                        text: `${error.response.data.non_field_errors[0]}` + " 😔",
                         type: "error",
                     });
                 } else {
                     Vue.notify({
                         position: "top center",
                         group: "login",
-                        text: "Enter error information here 😔",
+                        text: `${error.response.data.non_field_errors[0]}` + " 😔",
                         type: "error",
                     });
                 }
                 state.loggedIn = false;
                 state.token = "NONE";
+                localStorage.setItem("token", "NONE");
+                localStorage.setItem("loggedIn", false);
             })
             console.log(!state.loggedIn);
-            return (state.loggedIn = !state.loggedIn);
+            return("Success")
         },
         register() {
             return null;

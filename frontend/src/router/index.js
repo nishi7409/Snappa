@@ -73,5 +73,18 @@ const router = new VueRouter({
   routes
 })
 
+// // why isn't this working!!! -- its because
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     if (localStorage["token"] == "NONE" || localStorage["loggedIn"] == false) {
+//       window.location.href = "/auth/login"
+//     } else {
+//       next()
+//     }
+//   } else {
+//     next()
+//   }
+// })
+
 
 export default router
