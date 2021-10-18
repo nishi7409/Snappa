@@ -2,7 +2,6 @@ from django.db import models
 from django.db.models.fields import UUIDField
 from uuid import uuid4
 
-    
 # class Scoreboard(models.Model):
 #     stat1 = models.IntegerField(null=False, blank=False, default=0, editable=True)
 #     stat2 = models.IntegerField(null=False, blank=False, default=0, editable=True)
@@ -28,7 +27,3 @@ from uuid import uuid4
 #     phoneNumber = models.IntegerField(null=False, blank=False, editable=True)
 #     email = models.CharField(blank=False, null=False, editable=True)
 #     gameHistory = models.ManyToManyField(Game)
-
-
-
-
