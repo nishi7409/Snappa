@@ -5,7 +5,6 @@
             <v-row> 
                <v-layout align-center justify-center wrap>
                   <v-flex xs12 sm8 md4>
-                     <h1>Session Key - {{ sessionKey }}</h1>
                      <v-card class="elevation-12">
                         <v-toolbar class="text-center" dark color="primary">
                         <v-toolbar-title >Login</v-toolbar-title>                      
@@ -56,7 +55,7 @@ export default {
    },
    methods: {
       login() {
-         store.dispatch( type.login, {"username": this.username, "password": this.password})
+         store.dispatch(type.login, {"username": this.username, "password": this.password})
       }
    },
    computed: {

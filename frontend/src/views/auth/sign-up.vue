@@ -5,8 +5,8 @@
             <v-row> 
                <v-layout align-center justify-center wrap>
                   <v-flex xs12 sm8 md4>
-                      <v-img scr="../../assets/logo.jpg">
-                      </v-img>
+                     <v-img scr="../../assets/logo.jpg">
+                     </v-img>
                      <!-- <h1>Session Key - {{ sessionKey }}</h1> -->
                      <v-card class="elevation-12">
                         <v-toolbar class="text-center" dark color="primary">
@@ -22,18 +22,26 @@
                                  v-model="username"
                               ></v-text-field>
                               <v-text-field
+                                 id="email"
+                                 prepend-icon="mdi-email"
+                                 name="email"
+                                 label="email"
+                                 type="email"
+                                 v-model="email"
+                              ></v-text-field>
+                              <v-text-field
                                  id="password"
                                  prepend-icon="mdi-lock"
                                  name="password"
                                  label="Password"
                                  type="password"
-                                 v-model="password"
+                                 v-model="password1"
                               ></v-text-field>
                               <v-text-field
                                  prepend-icon="mdi-lock"
-                                 name="password2"
+                                 name="password"
                                  label="Confirm Password"
-                                 type="text"
+                                 type="password"
                                  v-model="password2"
                               ></v-text-field>
                            </v-form>
@@ -51,3 +59,31 @@
       </v-main>
    </v-app>
 </template>
+
+
+
+<script>
+import store from '../../store/index'
+import * as type from '../../store/mutationTypes/types'
+import { mapState } from 'vuex'
+
+export default {
+   name: 'SignUp',
+   data: function() {
+      return {
+      }
+   },
+   methods: {
+      register() {
+         store.dispatch(type.register, {"username": this.username, "email": this.email, "password1": this.password1, "password2": this.password2})
+      }
+   },
+   computed: {
+      ...mapState({
+         sessionKey: 'token',
+      })
+   }
+};
+</script>
+
+<style></style>

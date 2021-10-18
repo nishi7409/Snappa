@@ -153,3 +153,4 @@ SITE_ID = 1
 ACCOUNT_EMAIL_CONFIRMATION = "none"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATED_METHOD = "username_email"
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
