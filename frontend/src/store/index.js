@@ -25,6 +25,23 @@ export default new Vuex.Store({
     },
     mutations: {
         login(state, payload) {
+            if (String(payload.username).length == 0) {
+                Vue.notify({
+                    position: "top center",
+                    group: "login",
+                    text: "The username can't be blank 😔",
+                    type: "error",
+                })
+                return(undefined);
+            } else if (String(payload.password).length == 0) {
+                Vue.notify({
+                    position: "top center",
+                    group: "login",
+                    text: "The password can't be blank 😔",
+                    type: "error",
+                })
+                return(undefined);
+            }
             axios.post("http://127.0.0.1:8000/rest-auth/login/", {
                 username: payload.username,
                 password: payload.password
@@ -57,18 +74,11 @@ export default new Vuex.Store({
                         text: `${error.response.data.non_field_errors[0]}` + " 😔",
                         type: "error",
                     });
-                } else if (error.request) {
-                    Vue.notify({
-                        position: "top center",
-                        group: "login",
-                        text: `${error.response.data.non_field_errors[0]}` + " 😔",
-                        type: "error",
-                    });
                 } else {
                     Vue.notify({
                         position: "top center",
                         group: "login",
-                        text: `${error.response.data.non_field_errors[0]}` + " 😔",
+                        text: `${error.response.data.password[0]}` + " 😔",
                         type: "error",
                     });
                 }
@@ -78,16 +88,28 @@ export default new Vuex.Store({
                 localStorage.setItem("loggedIn", false);
             })
             console.log(!state.loggedIn);
-            return("Success")
+            return(undefined);
         },
         register() {
-            return null;
+            return(undefined);
         },
-        logout() {
-            // axios.post("http://127.0.0.1:8000/rest-auth/logout/", {
-
-            // })
-            return null;
+        logout(state) {
+            axios.post("http://127.0.0.1:8000/rest-auth/logout/").then(
+                Vue.notify({
+                    position: "top center",
+                    group: "login",
+                    text: `Successfully logged out` + " 👋",
+                    type: "error"
+                })
+            )
+            localStorage.setItem("loggedIn", false)
+            localStorage.setItem("token", "NONE")
+            state.loggedIn = false;
+            state.token = "NONE";
+            window.setTimeout(function() {
+                window.location.href = "/";
+            }, 1000);
+            return(undefined);
         }
     },
 });

@@ -3,8 +3,8 @@
     <v-app-bar dense>
       <v-toolbar-title>All Things Snappa</v-toolbar-title>
       <v-spacer></v-spacer>
-      <div id="loggedIn" v-if="sessionKey">  
-        <v-btn>
+      <div id="loggedIn" v-if="sessionKey !== 'NONE'">  
+        <v-btn v-on:click="logout()">
           <router-link to="">Log Out</router-link>
         </v-btn>
       </div>
@@ -14,7 +14,7 @@
         </v-btn>
         <v-btn>
           <router-link to="/auth/login">Login</router-link>
-        </v-btn>
+        </v-btn>  
       </div>
     </v-app-bar>
     <notifications position="top center" group="login"/>
@@ -34,14 +34,21 @@
 </style>
 
 <script>
+import store from '../src/store/index'
+import * as type from '../src/store/mutationTypes/types'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'Login',
+  name: 'Main',
   computed: {
     ...mapState({
         sessionKey: 'token',
     })
-  }
+  },
+  methods: {
+    logout() {
+      store.dispatch(type.logout)
+    },
+  },
 };
 </script>
