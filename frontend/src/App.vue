@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <v-app-bar dense>
-      <v-toolbar-title>All Things Snappa</v-toolbar-title>
+    <v-app-bar dense dark>
+      <v-toolbar-title>Snappa</v-toolbar-title>
       <v-spacer></v-spacer>
       <div id="loggedIn" v-if="sessionKey !== 'NONE'">  
         <v-btn v-on:click="logout()">Log Out</v-btn>
       </div>
       <div id="notLoggedIn" v-else>
+        <v-btn to="/">Home</v-btn>
         <v-btn to="/auth/sign-up">Sign Up</v-btn>
         <v-btn to="/auth/login">Login</v-btn>  
       </div>

@@ -8,7 +8,7 @@
           <video playsinline autoplay muted loop>
             <source :src='require("../assets/Home.mp4")' type='video/mp4'>
           </video>
-          <div class="overlay"></div>
+          <h1 class="headerSnappa">All Things Snappa</h1>
         </div>
       </v-row>
     </v-container>
@@ -28,23 +28,19 @@
   video {
     object-fit: cover !important;
     width: 100vw;
-    height: 50%;
+    height: 100vh;
     position: fixed;
     left: 0;
   }
-  
-  .hero .overlay {
-    width: 100%;
-    height: 50%;
-    position: absolute;
-    left: 0;
-    z-index: 2;
-    background: black;
-    opacity: 0.05;
-  }
 
-  .heroHeader {
+  .headerSnappa {
     color: white;
+    text-align:center;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate( -50%, 0% );
+    font-size: 8vh;
   }
 
 </style>
