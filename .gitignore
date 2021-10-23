@@ -3,5 +3,5 @@ venv
 .vscode
 *.sqlite3
 frontend/package-lock.json
-frontend/package-lock.json
 server/server/.env
+.env
