@@ -5,9 +5,7 @@
     <v-container>
       <v-row>
         <div class="hero">
-          <video playsinline autoplay muted loop>
-            <source :src='require("../assets/Home.mp4")' type='video/mp4'>
-          </video>
+          <div class="backgroundPicture"></div>
           <h1 class="headerSnappa">All Things Snappa</h1>
         </div>
       </v-row>
@@ -34,7 +32,7 @@
   }
 
   .headerSnappa {
-    color: white;
+    color: black;
     text-align:center;
     position: absolute;
     left: 50%;
