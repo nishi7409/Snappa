@@ -2,7 +2,8 @@
    <v-app id="inspire">
       <v-main>
          <v-container fluid>
-            <v-row> 
+            <v-row>
+               <!-- <v-img id="backgroundImage" src="https://picsum.photos/id/11/500/300"></v-img> -->
                <v-layout align-center justify-center wrap>
                   <v-flex xs12 sm8 md4>
                      <v-card class="elevation-12">
@@ -66,4 +67,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+   /* #backgroundImage {
+      position: absolute;
+
+   } */
+   /* html {
+      background: url("../../assets/snappaLogo.jpg") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;;
+   } */
+
+
+</style>
