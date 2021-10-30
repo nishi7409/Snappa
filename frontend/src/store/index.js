@@ -62,7 +62,7 @@ export default new Vuex.Store({
                         type: "success",
                     })
                     window.setTimeout(function () {
-                        window.location.href = "/dashboard";
+                        window.location.href = "/dashboard/home";
                     }, 1000)
                 }
             }).catch(function (error) {
@@ -144,7 +144,7 @@ export default new Vuex.Store({
                         type: "success",
                     })
                     window.setTimeout(function () {
-                        window.location.href = "/dashboard";
+                        window.location.href = "/dashboard/home";
                     }, 1000)
                 }
             }).catch(function (error) {

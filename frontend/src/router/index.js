@@ -143,7 +143,7 @@ router.beforeEach((to, from, next) => {
     }
   } else if (to.matched.some(record => record.meta.disableRouteIfLoggedIn)) {
     if (localStorage["token"] !== "NONE" || localStorage["loggedIn"] == true) {
-      window.location.href = "/dashboard";
+      window.location.href = "/dashboard/home";
     } else {
       next();
     }
