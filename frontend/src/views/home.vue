@@ -1,21 +1,44 @@
+
+
 <template>
   <div class="home">
     <v-container>
-    <v-row>
-      <h1>Main home page</h1>
-    </v-row>    
-  </v-container>
+      <v-row>
+        <div class="hero">
+          <div class="backgroundPicture"></div>
+          <h1 class="headerSnappa">All Things Snappa</h1>
+        </div>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
-// // @ is an alias to /src
-// import home from '@/components/home.vue'
-
-// export default {
-//   name: 'Home',
-//   components: {
-//     home
-//   }
-// }
+  export default {
+    name: 'Home',
+    components: {
+    }
+  }
 </script>
+
+<style scoped>
+
+  video {
+    object-fit: cover !important;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+  }
+
+  .headerSnappa {
+    color: black;
+    text-align:center;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate( -50%, 0% );
+    font-size: 8vh;
+  }
+
+</style>
