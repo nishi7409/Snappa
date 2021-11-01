@@ -4,6 +4,7 @@
       <router-link to="/" tag="div" class="v-toolbar__title">Snappa</router-link>
       <v-spacer></v-spacer>
       <div id="loggedIn" v-if="sessionKey !== 'NONE'">  
+        <v-btn >Profile</v-btn>
         <v-btn v-on:click="logout()">Log Out</v-btn>
       </div>
       <div id="notLoggedIn" v-else>
@@ -12,9 +13,9 @@
       </div>
     </v-app-bar>
     <notifications position="top center" group="login"/>
-    <notifications group="registration"/>
-    <notifications group="client"/>
-    <notifications group="server"/>
+    <notifications position="top center" group="registration"/>
+    <notifications position="top center" group="client"/>
+    <notifications position="top center" group="server"/>
     <router-view/>
   </div>
 </template>
@@ -24,6 +25,7 @@
 #app {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+
 
 </style>
 

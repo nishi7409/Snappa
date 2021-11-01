@@ -112,7 +112,7 @@ const routes = [
     name: "Dashboard_Profile",
     component: Profile,
     meta: {
-      requiresAuth: false,
+      requiresAuth: true,
       disableRouteIfLoggedIn: false,
     },
   },
