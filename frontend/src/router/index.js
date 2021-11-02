@@ -58,7 +58,7 @@ const routes = [
     name: "Dashboard_League_Create_Join",
     component: League_Home,
     meta: {
-      requiresAuth: true,
+      requiresAuth: false,
       disableRouteIfLoggedIn: false,
     },
   },
