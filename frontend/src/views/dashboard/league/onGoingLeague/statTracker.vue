@@ -21,17 +21,36 @@
              <v-flex xs4 sm4 md4 id="Dunk">
                 <center><v-checkbox v-model="checkbox" :label="`Dunk`"></v-checkbox></center>
             </v-flex>
-            <b-dropdown size="ls" id="catchDropDown" text="Who Caught" class="m-2">
-                <b-dropdown-item>NAME</b-dropdown-item>
-                <b-dropdown-item>NAME</b-dropdown-item>
-                <b-dropdown-item>NAME</b-dropdown-item>
-            </b-dropdown>
+            
+            <v-flex xs4 sm4 md4 id="catchDropDown">
+                <center><v-select :items="items" label="Who Caught?" solo></v-select></center>
+            </v-flex>
+
             <v-btn id="submit">Submit</v-btn>
         </v-layout>
     </v-container>
 </template>
 
+<script>
+  export default {
+    data: () => ({
+      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+    }),
+  }
+</script>
+
 <style scoped>
+    #bracketOptions {
+        margin: 0;
+        position: absolute;
+        top: 25%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        left: 32.5%;
+        font-weight: bold;
+        font-size: 6rem;
+    }
+
     #Teams {
         font-weight: bold;
     }
