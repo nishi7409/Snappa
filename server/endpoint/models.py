@@ -26,7 +26,6 @@ class Team(models.Model):
     user1 = models.ManyToManyField(User, related_name="user1")
     user2 = models.ManyToManyField(User, related_name="user2")
     team1Scoreboard = models.ManyToManyField(GameScoreboard, related_name="team1Scoreboard")
-    team2Scoreboard = models.ManyToManyField(GameScoreboard, related_name="team2Scoreboard")
 
 class Game(models.Model):
     team1 = models.ManyToManyField(Team, related_name="team1")
