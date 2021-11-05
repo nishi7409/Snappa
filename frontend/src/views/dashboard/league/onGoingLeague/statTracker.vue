@@ -28,6 +28,14 @@
 
             <v-btn id="submit">Submit</v-btn>
         </v-layout>
+        <v-container id="Score">
+            <span id="ScoreText">TEAM</span>
+            
+        </v-container>
+        <v-container id="Score2">
+            <span id="ScoreText">TEAM</span>
+            
+        </v-container>
     </v-container>
 </template>
 
@@ -49,6 +57,29 @@
         left: 32.5%;
         font-weight: bold;
         font-size: 6rem;
+    }
+
+    #Score {
+        margin: 0;
+        position: absolute;
+        top: 65%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        left: 65%;
+    }
+
+    #Score2 {
+        margin: 0;
+        position: absolute;
+        top: 65%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+        left: 25%;
+    }
+
+    #ScoreText {
+        font-weight: bold;
+        font-size: 3.75rem;
     }
 
     #Teams {
