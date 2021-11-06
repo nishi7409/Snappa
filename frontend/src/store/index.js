@@ -46,9 +46,7 @@ export default new Vuex.Store({
                 username: payload.username,
                 password: payload.password
             }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
+                headers: {'Content-Type': 'application/json',}
             }).then(function (response) {
                 if (response.status == 200) {
                     state.loggedIn = true;
@@ -127,20 +125,20 @@ export default new Vuex.Store({
                 email: payload.email,
                 password1: payload.password1,
                 password2: payload.password2
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then(function (response) {
+            }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
                 if (response.status == 201) {
                     state.loggedIn = true;
                     state.token = response.data.key;
                     localStorage.setItem("token", response.data.key);
                     localStorage.setItem("loggedIn", true);
+                    axios.post("http://127.0.0.1:8000/createUserObject/", {
+                        username: payload.username,
+                        email: payload.email
+                    }, {headers: {'Content-Type': 'application/json'}});
                     Vue.notify({
                         position: "top center",
                         group: "login",
-                        text: "Successfully logged into your account! 🙂",
+                        text: "Successfully created your account! 🙂",
                         type: "success",
                     })
                     window.setTimeout(function () {
