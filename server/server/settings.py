@@ -15,7 +15,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework.authtoken',
     'django.contrib.sites',
+    'drf_yasg',
     'rest_framework',
     'rest_auth',
     'allauth',
@@ -42,7 +43,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -156,3 +156,14 @@ ACCOUNT_EMAIL_CONFIRMATION = "none"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATED_METHOD = "username_email"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# drf-yasg
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'rest_framework.authentication.TokenAuthentication',
+    )
+}
