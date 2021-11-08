@@ -85,6 +85,20 @@
 </template>
 
 <script>
+
+import axios from 'axios';
+
+// stat1 = 0
+// stat2 = 0
+// stat3 = 0
+// stat4 = 0
+
+axios.post("http://127.0.0.1:8000/getUserStats/", {
+              username: localStorage.getItem("username")
+          }).then(function (response) {
+              console.log(response.data)
+          })
+
 export default {
     data() {
       return {
@@ -96,7 +110,7 @@ export default {
                   text: 'Number games played', value: 'numGames'
               },
               {
-                  text: 'Shots', value: 'shots'
+                  text: 'Shots', value: localStorage.getItem("username")
               },
               {
                   text: 'Table Hits', value: 'tblHits'
