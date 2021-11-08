@@ -28,6 +28,10 @@ class GenerateUserObject(APIView):
             elif (len(User.objects.filter(username=str(request.data['username']))) == 0):
                 user = User(username=str(request.data['username']), email=str(request.data['email']))
                 user.save()
+                defaultUserStats = UserStats(stat1=0, stat2=0, stat3=0, stat4=0)
+                defaultUserStats.save()
+                user.userStats.add(defaultUserStats)
+                user.save()
                 return Response(data={"response": True, "error": "Created a User object for this user"})
             else:
                 return Response(data={"response": True, "error": "THIS SHOULDN'T APPEAR"})
