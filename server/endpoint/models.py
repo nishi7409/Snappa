@@ -10,8 +10,8 @@ class UserStats(models.Model):
 
 class User(models.Model):
     id = models.UUIDField(blank=False, null=False, primary_key=True, default=uuid4, editable=False)
-    username = models.CharField(blank=False, null=False, editable=True, max_length=256)
-    email = models.CharField(blank=False, null=False, editable=True, max_length=256)
+    username = models.CharField(blank=False, null=False, editable=True, max_length=256, default="user1")
+    email = models.CharField(blank=False, null=False, editable=True, max_length=256, default="user1@email.com")
     userStats = models.ManyToManyField(UserStats)
 
 class GameScoreboard(models.Model):
@@ -31,3 +31,18 @@ class Game(models.Model):
     team1 = models.ManyToManyField(Team, related_name="team1")
     team2 = models.ManyToManyField(Team, related_name="team2")
     winner = models.ManyToManyField(Team, related_name="winnerTeam")
+
+class LeagueOptions(models.Model):
+    option1 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    option2 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    option3 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+
+class League(models.Model):
+    ownerUsername = models.CharField(blank=False, null=False, editable=False, max_length=256)
+    leagueName = models.CharField(blank=False, null=False, editable=True, max_length=256)
+    leagueOptions = models.ManyToManyField(LeagueOptions)
+    allUsers = models.ManyToManyField(User)
+    allTeams = models.ManyToManyField(Team)
+    allGames = models.ManyToManyField(Game)
+    
+
