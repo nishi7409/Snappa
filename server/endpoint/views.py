@@ -1,3 +1,4 @@
+from django.db.models.base import Model
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import *
@@ -30,4 +31,19 @@ class GenerateUserObject(APIView):
                 return Response(data={"response": True, "error": "Created a User object for this user"})
             else:
                 return Response(data={"response": True, "error": "THIS SHOULDN'T APPEAR"})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GenerateUserStats():
+    def parse(self, request, format=None):
+        serializer = StatsSerializer(data = request.data)
+        tmpName = str(request.data['username'])
+        if serializer.is_valid():
+            if (len(User.objects.filter(username = tmpName)) == 1):
+                tmpUser = User.objects.get(username = tmpName)
+                return Response(data={  "stat1" : tmpUser.userStats.stat1, 
+                                        "stat2" : tmpUser.userStats.stat2,
+                                        "stat3" : tmpUser.userStats.stat3,
+                                        "stat4" : tmpUser.userStats.stat4 })
+            else:
+                return Response(data={"response": True, "error": "This user does not exist"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
