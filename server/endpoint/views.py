@@ -44,7 +44,12 @@ class GenerateUserStats(APIView):
         if serializer.is_valid():
             if (len(User.objects.filter(username = tmpName)) == 1):
                 tmpUser = User.objects.get(username = tmpName)
-                return Response(data={  "stats" : tmpUser.userStats.all() })
+                
+                return Response(data={  "stat1" : tmpUser.userStats.all()[0].stat1,
+                                        "stat2" : tmpUser.userStats.all()[0].stat2,
+                                        "stat3" : tmpUser.userStats.all()[0].stat3,
+                                        "stat4" : tmpUser.userStats.all()[0].stat4})
+
             else:
                 return Response(data={"response": True, "error": "This user does not exist"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -91,10 +91,7 @@ import axios from 'axios';
 axios.post("http://127.0.0.1:8000/getUserStats/", {
               username: localStorage.getItem("username")
           }).then(function (response) {
-            //   console.log(response.data)
-            if (response.data.size() == 0) {
-                console.log(response.data)
-            }
+              console.log(response.data.stat1)
           })
 
 export default {
