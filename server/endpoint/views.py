@@ -27,7 +27,7 @@ class GenerateUserObject(APIView):
             elif (len(User.objects.filter(username=str(request.data['username']))) == 0):
                 user = User(username=str(request.data['username']), email=str(request.data['email']))
                 user.save()
-                defaultUserStats = UserStats(stat1=1, stat2=1, stat3=1, stat4=1)
+                defaultUserStats = UserStats(stat1=0, stat2=0, stat3=0, stat4=0)
                 defaultUserStats.save()
                 user.userStats.add(defaultUserStats)
                 user.save()
