@@ -108,7 +108,7 @@ const routes = [
     },
   },
   {
-    path: "/dashboard/profile/:id",
+    path: "/dashboard/profile/:username",
     name: "Dashboard_Profile",
     component: Profile,
     meta: {

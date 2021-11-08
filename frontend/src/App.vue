@@ -14,6 +14,9 @@
                             <v-list-item-title v-on:click="home()">Home</v-list-item-title>
                         </v-list-item>
                         <v-list-item>
+                            <v-list-item-title v-on:click="profile()">Profile</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item>
                             <v-list-item-title v-on:click="logout()">Log out</v-list-item-title>
                         </v-list-item>
                     </v-list>
@@ -63,6 +66,9 @@ methods: {
         window.location.href = "../dashboard/home"
         return(undefined);
     },
+    profile() {
+        window.location.href = `http://localhost:8080/dashboard/profile/${localStorage.getItem('username')}`
+    }
 },
 };
 </script>
