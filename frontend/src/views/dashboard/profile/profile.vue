@@ -137,14 +137,15 @@ export default {
           ],
           items: [
               {
-                  stat: 'User Stats', align:'center'
+                  stat: 'User Stats', align:'center',
+                  numGames: 0
               },
               {
                   stat: 'Average Stats'
               },
               {
                   stat: 'Top Player Stats'
-              }
+              },
           ],
           editPage: true,
           pageLook: true
