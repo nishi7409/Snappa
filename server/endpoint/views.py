@@ -33,17 +33,14 @@ class GenerateUserObject(APIView):
                 return Response(data={"response": True, "error": "THIS SHOULDN'T APPEAR"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class GenerateUserStats():
-    def parse(self, request, format=None):
+class GenerateUserStats(APIView):
+    def post(self, request, format=None):
         serializer = StatsSerializer(data = request.data)
         tmpName = str(request.data['username'])
         if serializer.is_valid():
             if (len(User.objects.filter(username = tmpName)) == 1):
                 tmpUser = User.objects.get(username = tmpName)
-                return Response(data={  "stat1" : tmpUser.userStats.stat1, 
-                                        "stat2" : tmpUser.userStats.stat2,
-                                        "stat3" : tmpUser.userStats.stat3,
-                                        "stat4" : tmpUser.userStats.stat4 })
+                return Response(data={  "stats" : tmpUser.userStats.all() })
             else:
                 return Response(data={"response": True, "error": "This user does not exist"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -7,4 +7,5 @@ from drf_yasg import openapi
 
 urlpatterns = [
     path('createUserObject/', GenerateUserObject.as_view()),
+    path('getUserStats/', GenerateUserStats.as_view()),
 ]
