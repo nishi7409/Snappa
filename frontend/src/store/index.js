@@ -138,7 +138,7 @@ export default new Vuex.Store({
                     localStorage.setItem("token", response.data.key);
                     localStorage.setItem("loggedIn", true);
                     localStorage.setItem("username", payload.username);
-                    axios.post("http://127.0.0.1:8000/createUserObject/", {
+                    axios.post("http://127.0.0.1:8000/createUser/", {
                         username: payload.username,
                         email: payload.email
                     }, {headers: {'Content-Type': 'application/json'}});
