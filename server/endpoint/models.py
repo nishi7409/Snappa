@@ -20,11 +20,11 @@ class GameScoreboard(models.Model):
 
 class Team(models.Model):
     name = models.CharField(null=False, blank=False, max_length=256)
-    user1 = models.ForeignKey(User, related_name="user1")
-    user2 = models.ForeignKey(User, related_name="user2")
+    user1 = models.OneToOneField(User, related_name="user1", on_delete=models.CASCADE)
+    user2 = models.OneToOneField(User, related_name="user2", on_delete=models.CASCADE)
     team1Scoreboard = models.ManyToManyField(GameScoreboard, related_name="team1Scoreboard")
 
 class Game(models.Model):
-    team1 = models.ForeignKey(Team, related_name="team1")
-    team2 = models.ForeignKey(Team, related_name="team2")
-    winner = models.ManyToManyField(Team, related_name="winnerTeam")
+    team1 = models.OneToOneField(Team, related_name="team1", on_delete=models.CASCADE)
+    team2 = models.OneToOneField(Team, related_name="team2", on_delete=models.CASCADE)
+    winner = models.OneToOneField(Team, related_name="winnerTeam", on_delete=models.CASCADE)
