@@ -62,7 +62,7 @@ methods: {
         return(undefined);
     },
     home() {
-        window.location.href = "../dashboard/home"
+        window.location.href = "http://localhost:8080/dashboard/home"
         return(undefined);
     },
     profile() {
