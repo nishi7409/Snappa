@@ -5,5 +5,4 @@ venv
 frontend/package-lock.json
 server/server/.env
 .env
-/server/endpoint/__pycache__/
-/server/server/__pycache__/
+*.pyc

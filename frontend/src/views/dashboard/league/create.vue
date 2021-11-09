@@ -7,11 +7,11 @@
             </v-flex>
             <v-flex xs4 sm4 md4 id="dataInput2">
                 <center>
-                    <v-text-field label="Enter League Name"></v-text-field>
+                    <v-text-field v-model="leagueName" name="leagueName" label="Enter League Name"></v-text-field>
                     <span id="bracketOptions">Bracket Options</span>
                     <v-checkbox v-model="checkbox" :label="`Randomized`"></v-checkbox>
                     <v-checkbox v-model="checkbox" :label="`Custom`"></v-checkbox>
-                    <v-btn id="submitLeague">Submit League</v-btn>
+                    <v-btn id="submitLeague" @click="submitLeague()">Submit League</v-btn>
                 </center>
             </v-flex>
             <v-flex xs4 sm4 md4 id="dataInput3">
@@ -21,6 +21,42 @@
     </v-container>
 </template>
 
+<script>
+import Vue from 'vue';
+import axios from 'axios';
+export default {
+    methods: {
+        submitLeague(){
+            axios.post("http://127.0.0.1:8000/createLeague/", {
+                ownerUsername: localStorage.getItem('username'),
+                leagueName: this.leagueName
+            }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+                if (response.data.error == "User already started a league"){
+                    Vue.notify({
+                        position: "top center",
+                        group: "server",
+                        text: response.data.error,
+                        type: "error",
+                    })
+                    return(undefined);
+                }else{
+                    Vue.notify({
+                        position: "top center",
+                        group: "server",
+                        text: "Successfully created a league",
+                        type: "success",
+                    })
+                    window.setTimeout(function () {
+                        var leagueName = response.data.leagueName
+                        localStorage.setItem('leagueName', leagueName)
+                        window.location.href = `/dashboard/league/${leagueName}/preview`
+                    }, 500)
+                }
+            })
+        }
+    }
+}
+</script>
 
 <style scoped>
     #createPage {

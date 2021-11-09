@@ -28,3 +28,16 @@ class Game(models.Model):
     team1 = models.OneToOneField(Team, related_name="team1", on_delete=models.CASCADE)
     team2 = models.OneToOneField(Team, related_name="team2", on_delete=models.CASCADE)
     winner = models.OneToOneField(Team, related_name="winnerTeam", on_delete=models.CASCADE)
+
+class LeagueOptions(models.Model):
+    option1 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    option2 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    option3 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+
+class League(models.Model):
+    ownerUsername = models.CharField(blank=False, null=False, editable=False, max_length=256)
+    leagueName = models.CharField(blank=False, null=False, editable=True, max_length=256)
+    leagueOptions = models.ManyToManyField(LeagueOptions)
+    allUsers = models.ManyToManyField(User)
+    allTeams = models.ManyToManyField(Team)
+    allGames = models.ManyToManyField(Game)
