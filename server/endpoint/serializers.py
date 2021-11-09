@@ -22,6 +22,13 @@ class LeagueAddUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            "leagueOwnerUsername"
             "username"
         ]
+        extra_kwargs = {
+            "ownerUsername": {"required": True}   
+        }
+
+class LeagueGetActiveUsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = League
+        fields = ["leagueName"]

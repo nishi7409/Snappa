@@ -29,7 +29,6 @@
             </v-app-bar>
             <notifications position="top center" group="login"/>
             <notifications position="top center" group="registration"/>
-            <notifications position="top center" group="client"/>
             <notifications position="top center" group="server"/>
             <router-view/>
         </div>

@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import axios from 'axios';
 export default {
     methods: {
@@ -31,9 +32,25 @@ export default {
                 leagueName: this.leagueName
             }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
                 if (response.data.error == "User already started a league"){
-                    console.log("gay ;-;")
+                    Vue.notify({
+                        position: "top center",
+                        group: "server",
+                        text: response.data.error,
+                        type: "error",
+                    })
+                    return(undefined);
                 }else{
-                    console.log(localStorage.getItem('username'))
+                    Vue.notify({
+                        position: "top center",
+                        group: "server",
+                        text: "Successfully created a league",
+                        type: "success",
+                    })
+                    window.setTimeout(function () {
+                        var leagueName = response.data.leagueName
+                        localStorage.setItem('leagueName', leagueName)
+                        window.location.href = `/dashboard/league/${leagueName}/preview`
+                    }, 500)
                 }
             })
         }
