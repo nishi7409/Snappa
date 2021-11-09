@@ -12,6 +12,11 @@
     </bracket>
         </div>
       </v-row>
+      <v-row>
+        <!-- look up how to import a component -->
+        <!-- the component would be leadboard.vue -->
+        <!-- it should be something like <leaderboard/> but you need to add it to the export crap -->
+      </v-row>
     </v-container>
   </div>
 </template>

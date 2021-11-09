@@ -1,5 +1,5 @@
 <template>
-  <v-data-table dark
+  <v-data-table
     dense
     :headers="headers"
     :items="teams"
