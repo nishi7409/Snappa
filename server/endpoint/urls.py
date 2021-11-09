@@ -6,6 +6,8 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 urlpatterns = [
-    path('createUserObject/', GenerateUserObject.as_view()),
-    path('getUserStats/', GenerateUserStats.as_view()),
+    path('createUser/', GenerateUserObject.as_view()),
+    path('createLeague/', LeagueCreate.as_view()),
+    path('leagueAddUser/', LeagueAddUser.as_view()),
+    path('allLeagueUsers/', GetActiveLeagueUsers.as_view()),
 ]

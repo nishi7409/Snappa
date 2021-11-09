@@ -55,7 +55,7 @@ export default new Vuex.Store({
                     state.username = payload.username;
                     localStorage.setItem("token", response.data.key);
                     localStorage.setItem("loggedIn", true);
-                    localStorage.setItem("username", payload.username)
+                    localStorage.setItem("username", payload.username);
                     Vue.notify({
                         position: "top center",
                         group: "login",
@@ -134,11 +134,11 @@ export default new Vuex.Store({
                 if (response.status == 201) {
                     state.loggedIn = true;
                     state.token = response.data.key;
-                    state.username = payload.username
+                    state.username = payload.username;
                     localStorage.setItem("token", response.data.key);
                     localStorage.setItem("loggedIn", true);
                     localStorage.setItem("username", payload.username);
-                    axios.post("http://127.0.0.1:8000/createUserObject/", {
+                    axios.post("http://127.0.0.1:8000/createUser/", {
                         username: payload.username,
                         email: payload.email
                     }, {headers: {'Content-Type': 'application/json'}});
@@ -174,7 +174,7 @@ export default new Vuex.Store({
                 }
                 state.loggedIn = false;
                 state.token = "NONE";
-                state.username = "username";
+                state.username = "";
                 localStorage.setItem("token", "NONE");
                 localStorage.setItem("loggedIn", false);
                 localStorage.setItem("username", "");
@@ -191,7 +191,7 @@ export default new Vuex.Store({
                 })
             )
             localStorage.setItem("loggedIn", false)
-            localStorage.setItem("token", "NONE");
+            localStorage.setItem("token", "NONE")
             localStorage.setItem("username", "");
             state.loggedIn = false;
             state.token = "NONE";

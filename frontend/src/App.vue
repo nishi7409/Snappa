@@ -29,7 +29,6 @@
             </v-app-bar>
             <notifications position="top center" group="login"/>
             <notifications position="top center" group="registration"/>
-            <notifications position="top center" group="client"/>
             <notifications position="top center" group="server"/>
             <router-view/>
         </div>
@@ -63,7 +62,7 @@ methods: {
         return(undefined);
     },
     home() {
-        window.location.href = "../dashboard/home"
+        window.location.href = "http://localhost:8080/dashboard/home"
         return(undefined);
     },
     profile() {
