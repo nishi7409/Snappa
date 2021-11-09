@@ -6,3 +6,5 @@ frontend/package-lock.json
 server/server/.env
 .env
 *.pyc
+server/endpoint/__pycache__/
+server/server/__pycache__/
