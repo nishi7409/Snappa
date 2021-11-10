@@ -106,3 +106,13 @@ class SubmitLeague(APIView):
             currentLeague.save()
             return Response(data={"response": True, "error": "Started league"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DeleteLeague(APIView):
+    def post(self, request, format=None):
+        serializer = DeleteLeagueSerializer(data=request.data)
+        if serializer.is_valid():
+            if (len(League.objects.filter(ownerUsername=request.data['username'])) == 0):
+                return Response(data={"response": False, "error": "User doesn't own any leagues"})
+            League.objects.filter(ownerUsername=request.data['username']).delete()
+            return Response(data={"response": True, "error": "Deleted league owned by user"})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

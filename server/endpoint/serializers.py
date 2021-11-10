@@ -47,3 +47,10 @@ class SubmitLeagueSerializer(serializers.ModelSerializer):
             "leagueName",
             "ownerUsername"
         ]
+
+class DeleteLeagueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "username"
+        ]

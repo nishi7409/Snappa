@@ -26,7 +26,7 @@ import Vue from 'vue';
 import axios from 'axios';
 export default {
     methods: {
-        submitLeague(){
+        submitLeague() {
             axios.post("http://127.0.0.1:8000/createLeague/", {
                 ownerUsername: localStorage.getItem('username'),
                 leagueName: this.leagueName
@@ -53,7 +53,7 @@ export default {
                     }, 500)
                 }
             })
-        }
+        },
     },
     mounted() {
         axios.post("http://127.0.0.1:8000/doesLeagueExist/", {

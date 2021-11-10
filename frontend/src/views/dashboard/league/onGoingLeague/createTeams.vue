@@ -61,7 +61,7 @@
           <v-btn large fixed bottom color="primary">
             Finalize Teams
          </v-btn>
-        </div>
+        </div>  
         </v-container>
     </div>
 </template>
