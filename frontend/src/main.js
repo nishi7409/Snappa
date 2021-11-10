@@ -4,9 +4,11 @@ import vuetify from './plugins/vuetify'
 import router from './router'
 import store from './store/index.js'
 import Notifications from 'vue-notification'
+import Confetti from 'canvas-confetti'
 
 Vue.config.productionTip = false
 Vue.use(Notifications);
+Vue.use(Confetti);
 
 if (!localStorage.getItem('loggedIn')) {
   localStorage.setItem("loggedIn", false);
