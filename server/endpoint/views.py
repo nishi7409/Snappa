@@ -38,6 +38,8 @@ class LeagueCreate(APIView):
         if serializer.is_valid():
             if (len(League.objects.filter(ownerUsername=str(request.data['ownerUsername']))) >= 1):
                 return Response(data={"response": False, "error": "User already started a league"})
+            elif (len(League.objects.filter(leagueName=str(request.data['leagueName']))) >= 1):
+                return Response(data={"response": False, "error": "League name has been used previously"})
             else:
                 league = League(ownerUsername=str(request.data['ownerUsername']), leagueName=str(request.data['leagueName']), started=0)
                 league.save()

@@ -21,16 +21,35 @@
               <v-list-item-content>
                 <v-list-item-title>{{item}}</v-list-item-title>
               </v-list-item-content>
-
-              <v-list-item-action>
-                <v-btn href="google.com" depressed text>
-                  View User
-                  <v-icon color="orange darken-4" right>
-                    mdi-open-in-new
-                  </v-icon>
-                </v-btn>
-              </v-list-item-action>
-            </v-list-item>
+              <div v-if="isOwner == true">
+                <v-list-item-action>
+                  <v-btn href="google.com" depressed text>
+                    User Stats
+                    <v-icon color="orange darken-4" right>
+                      mdi-open-in-new
+                    </v-icon>
+                  </v-btn>
+                </v-list-item-action>
+                <v-list-item-action>
+                  <v-btn href="google.com" depressed text>
+                    Kick User
+                    <v-icon color="orange darken-4" right>
+                      mdi-close
+                    </v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </div>
+              <div v-else>
+                <v-list-item-action>
+                  <v-btn href="google.com" depressed text>
+                    User Stats
+                    <v-icon color="orange darken-4" right>
+                      mdi-open-in-new
+                    </v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </div>
+              </v-list-item>
           </template>
         </v-virtual-scroll>
         <div v-if="isOwner == true">

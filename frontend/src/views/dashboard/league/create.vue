@@ -31,7 +31,7 @@ export default {
                 ownerUsername: localStorage.getItem('username'),
                 leagueName: this.leagueName
             }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
-                if (response.data.error == "User already started a league"){
+                if (response.data.response == false){
                     Vue.notify({
                         position: "top center",
                         group: "server",
