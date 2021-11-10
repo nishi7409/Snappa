@@ -114,7 +114,9 @@ export default {
     },
     mounted() {
         this.$root.$on('updateItems', () => {
-            axios.get("http://127.0.0.1:8000/allLeagueUsers/").then(function (response){
+            axios.post("http://127.0.0.1:8000/allLeagueUsers/", {
+              leagueName: localStorage.getItem("leagueName")
+            }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
                 if (response.data.response == false){
                     console.log("help")
                 }else{
