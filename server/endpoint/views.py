@@ -25,7 +25,7 @@ class GenerateUserObject(APIView):
             if (len(User.objects.filter(username=str(request.data['username']))) == 1):
                 return Response(data={"response": False, "error": "There was already a saved User object for this user"})
             elif (len(User.objects.filter(username=str(request.data['username']))) == 0):
-                user = User(username=str(request.data['username']), email=str(request.data['email']), stat1=0, stat2=0, stat3=0, stat4=0)
+                user = User(username=str(request.data['username']), email=str(request.data['email']), stat1=0, stat2=0, stat3=0, stat4=0, stat5=0, stat6=0, stat7=0, stat8=0, stat9=0, stat10=0, stat11=0)
                 user.save()
                 return Response(data={"response": True, "error": "Created a User object for this user"})
             else:
@@ -34,7 +34,7 @@ class GenerateUserObject(APIView):
 
 class GenerateUserStats(APIView):
     def post(self, request, format=None):
-        serializer = StatsSerializer(data = request.data)
+        serializer = StatSerializer(data = request.data)
         tmpName = str(request.data['username'])
         if serializer.is_valid():
             if (len(User.objects.filter(username = tmpName)) == 1):
@@ -43,7 +43,14 @@ class GenerateUserStats(APIView):
                 return Response(data={  "stat1" : tmpUser.stat1,
                                         "stat2" : tmpUser.stat2,
                                         "stat3" : tmpUser.stat3,
-                                        "stat4" : tmpUser.stat4})
+                                        "stat4" : tmpUser.stat4,
+                                        "stat5" : tmpUser.stat5,
+                                        "stat6" : tmpUser.stat6,
+                                        "stat7" : tmpUser.stat7,
+                                        "stat8" : tmpUser.stat8,
+                                        "stat9" : tmpUser.stat9,
+                                        "stat10" : tmpUser.stat10,
+                                        "stat11" : tmpUser.stat11})
 
             else:
                 return Response(data={"response": True, "error": "This user does not exist"})

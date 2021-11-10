@@ -10,6 +10,13 @@ class UserSerializer(serializers.ModelSerializer):
             "email"
         ]
 
+class StatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [ 
+            "username"
+        ]
+
 class LeagueCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = League

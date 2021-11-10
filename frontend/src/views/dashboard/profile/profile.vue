@@ -91,7 +91,17 @@ import axios from 'axios';
 axios.post("http://127.0.0.1:8000/getUserStats/", {
               username: localStorage.getItem("username")
           }).then(function (response) {
-              console.log(response.data.stat1)
+              localStorage.setItem('stat1', response.data.stat1)
+              localStorage.setItem('stat2', response.data.stat2)
+              localStorage.setItem('stat3', response.data.stat3)
+              localStorage.setItem('stat4', response.data.stat4)
+              localStorage.setItem('stat5', response.data.stat5)
+              localStorage.setItem('stat6', response.data.stat6)
+              localStorage.setItem('stat7', response.data.stat7)
+              localStorage.setItem('stat8', response.data.stat8)
+              localStorage.setItem('stat9', response.data.stat9)
+              localStorage.setItem('stat10', response.data.stat10)
+              localStorage.setItem('stat11', response.data.stat11)
           })
 
 export default {
@@ -123,10 +133,10 @@ export default {
                   text: 'Potential Points', value: 'pPoints'
               },
               {
-                  text: 'Catches', value: 'clinks'
+                  text: 'Catches', value: 'numCatch'
               },
               {
-                  text: 'Drops', value: 'clinks'
+                  text: 'Drops', value: 'numDrop'
               },
               {
                   text: 'Table Hit %', value: 'tblHitPercen'
@@ -138,7 +148,17 @@ export default {
           items: [
               {
                   stat: 'User Stats', align:'center',
-                  numGames: 0
+                  numGames: localStorage.getItem('stat1'),
+                  numShots: localStorage.getItem('stat2'),
+                  tblHits: localStorage.getItem('stat3'),
+                  points: localStorage.getItem('stat4'),
+                  clinks: localStorage.getItem('stat5'),
+                  dunks: localStorage.getItem('stat6'),
+                  pPoints: localStorage.getItem('stat7'),
+                  numCatch: localStorage.getItem('stat8'),
+                  numDrop: localStorage.getItem('stat9'),
+                  tblHitPercen: localStorage.getItem('stat10'),
+                  pPercen: localStorage.getItem('stat11')
               },
               {
                   stat: 'Average Stats'

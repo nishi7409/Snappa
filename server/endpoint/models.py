@@ -10,6 +10,13 @@ class User(models.Model):
     stat2 = models.IntegerField(null=False, blank=False, default=0, editable=True)
     stat3 = models.IntegerField(null=False, blank=False, default=0, editable=True)
     stat4 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    stat5 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    stat6 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    stat7 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    stat8 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    stat9 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    stat10 = models.IntegerField(null=False, blank=False, default=0, editable=True)
+    stat11 = models.IntegerField(null=False, blank=False, default=0, editable=True)
 
 class GameScoreboard(models.Model):
     stat1 = models.IntegerField(null=False, blank=False, default=0, editable=True)
