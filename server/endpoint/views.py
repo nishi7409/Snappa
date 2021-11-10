@@ -81,7 +81,14 @@ class DoesLeagueExist(APIView):
         if serializer.is_valid():
             if (len(League.objects.filter(ownerUsername=request.data['username'])) == 0):
                 return Response(data={"response": False, "error": "User doesn't own any leagues"})
-            return Response(data={"response": True, "error": "User owns a leagues", "leagueName": League.objects.get(ownerUsername=request.data['username']).leagueName, "startedStatus": int(League.objects.get(ownerUsername=request.data['username']).started)})
+            allTeams = []
+            for x in League.objects.get(ownerUsername=request.data['username']).allTeams.all():
+                allTeams.append(x)
+            if (len(allTeams) == 0):
+                lengthTeams = 0
+            else:
+                lengthTeams = 1
+            return Response(data={"response": True, "error": "User owns a leagues", "leagueName": League.objects.get(ownerUsername=request.data['username']).leagueName, "startedStatus": int(League.objects.get(ownerUsername=request.data['username']).started), "lengthTeams": lengthTeams})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class SubmitLeague(APIView):
@@ -98,4 +105,14 @@ class SubmitLeague(APIView):
             currentLeague.started = 1
             currentLeague.save()
             return Response(data={"response": True, "error": "Started league"})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DeleteLeague(APIView):
+    def post(self, request, format=None):
+        serializer = DeleteLeagueSerializer(data=request.data)
+        if serializer.is_valid():
+            if (len(League.objects.filter(ownerUsername=request.data['username'])) == 0):
+                return Response(data={"response": False, "error": "User doesn't own any leagues"})
+            League.objects.filter(ownerUsername=request.data['username']).delete()
+            return Response(data={"response": True, "error": "Deleted league owned by user"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

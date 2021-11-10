@@ -8,7 +8,9 @@ import League_Home from "../views/dashboard/league/home.vue";
 import League_Create from "../views/dashboard/league/create.vue";
 import League_Join from "../views/dashboard/league/join.vue";
 import League_Preview from "../views/dashboard/league/onGoingLeague/preview.vue";
+import League_CreateTeams from "../views/dashboard/league/onGoingLeague/createTeams.vue";
 import League_Bracket from "../views/dashboard/league/onGoingLeague/bracket.vue";
+import League_Leaderboard from "../views/dashboard/league/onGoingLeague/leaderboard.vue";
 import League_StatTracker from "../views/dashboard/league/onGoingLeague/statTracker.vue";
 import Profile from "../views/dashboard/profile/profile.vue";
 import PageNotFound from "../views/404.vue";
@@ -90,9 +92,27 @@ const routes = [
     },
   },
   {
+    path: "/dashboard/league/:id/createTeams",
+    name: "LeagueOwnerPreview",
+    component: League_CreateTeams,
+    meta: {
+      requiresAuth: true,
+      disableRouteIfLoggedIn: false,
+    },
+  },
+  {
     path: "/dashboard/league/:id/bracket",
     name: "Dashboard_League_Bracket",
     component: League_Bracket,
+    meta: {
+      requiresAuth: true,
+      disableRouteIfLoggedIn: false,
+    },
+  },
+  {
+    path: "/dashboard/league/:id/leaderboard",
+    name: "Dashboard_League_Leaderboard",
+    component: League_Leaderboard,
     meta: {
       requiresAuth: true,
       disableRouteIfLoggedIn: false,
