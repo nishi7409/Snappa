@@ -32,7 +32,7 @@
       teams: [
         {
           name: 'Team 1',
-          shots: 159,
+          shots: 163,
           table_hits: 145,
           points: 24,
           clinks: 8,
