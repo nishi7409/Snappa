@@ -81,7 +81,7 @@ const routes = [
     },
   },
   {
-    path: "/dashboard/league/:id/preview",
+    path: "/dashboard/league/:leagueName/preview",
     name: "Dashboard_League_Preview",
     component: League_Preview,
     meta: {
