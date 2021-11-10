@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         loggedIn: false,
-        token: localStorage.getItem('token') || ''
+        token: localStorage.getItem('token') || '',
+        username: localStorage.getItem('username') || ''
     },
     getters: {
 
@@ -46,15 +47,15 @@ export default new Vuex.Store({
                 username: payload.username,
                 password: payload.password
             }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
+                headers: {'Content-Type': 'application/json',}
             }).then(function (response) {
                 if (response.status == 200) {
                     state.loggedIn = true;
                     state.token = response.data.key;
+                    state.username = payload.username;
                     localStorage.setItem("token", response.data.key);
                     localStorage.setItem("loggedIn", true);
+                    localStorage.setItem("username", payload.username);
                     Vue.notify({
                         position: "top center",
                         group: "login",
@@ -83,8 +84,10 @@ export default new Vuex.Store({
                 }
                 state.loggedIn = false;
                 state.token = "NONE";
+                state.username = "";
                 localStorage.setItem("token", "NONE");
                 localStorage.setItem("loggedIn", false);
+                localStorage.setItem("username", "");
             })
             return(undefined);
         },
@@ -127,20 +130,22 @@ export default new Vuex.Store({
                 email: payload.email,
                 password1: payload.password1,
                 password2: payload.password2
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then(function (response) {
+            }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
                 if (response.status == 201) {
                     state.loggedIn = true;
                     state.token = response.data.key;
+                    state.username = payload.username;
                     localStorage.setItem("token", response.data.key);
                     localStorage.setItem("loggedIn", true);
+                    localStorage.setItem("username", payload.username);
+                    axios.post("http://127.0.0.1:8000/createUser/", {
+                        username: payload.username,
+                        email: payload.email
+                    }, {headers: {'Content-Type': 'application/json'}});
                     Vue.notify({
                         position: "top center",
                         group: "login",
-                        text: "Successfully logged into your account! 🙂",
+                        text: "Successfully created your account! 🙂",
                         type: "success",
                     })
                     window.setTimeout(function () {
@@ -169,8 +174,10 @@ export default new Vuex.Store({
                 }
                 state.loggedIn = false;
                 state.token = "NONE";
+                state.username = "";
                 localStorage.setItem("token", "NONE");
                 localStorage.setItem("loggedIn", false);
+                localStorage.setItem("username", "");
             })
             return(undefined);
         },
@@ -185,8 +192,10 @@ export default new Vuex.Store({
             )
             localStorage.setItem("loggedIn", false)
             localStorage.setItem("token", "NONE")
+            localStorage.setItem("username", "");
             state.loggedIn = false;
             state.token = "NONE";
+            state.username = "";
             window.setTimeout(function() {
                 window.location.href = "/";
             }, 1000);

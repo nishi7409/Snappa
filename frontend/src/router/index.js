@@ -59,7 +59,7 @@ const routes = [
     name: "Dashboard_League_Create_Join",
     component: League_Home,
     meta: {
-      requiresAuth: true,
+      requiresAuth: false,
       disableRouteIfLoggedIn: false,
     },
   },
@@ -68,7 +68,7 @@ const routes = [
     name: "Dashboard_League_Create",
     component: League_Create,
     meta: {
-      requiresAuth: true,
+      requiresAuth: false,
       disableRouteIfLoggedIn: false,
     },
   },
@@ -113,16 +113,16 @@ const routes = [
     name: "Dashboard_League_Bracket_StatTracker",
     component: League_StatTracker,
     meta: {
-      requiresAuth: true,
+      requiresAuth: false,
       disableRouteIfLoggedIn: false,
     },
   },
   {
-    path: "/dashboard/profile/:id",
+    path: "/dashboard/profile/:username",
     name: "Dashboard_Profile",
     component: Profile,
     meta: {
-      requiresAuth: true,
+      requiresAuth: false,
       disableRouteIfLoggedIn: false,
     },
   },
