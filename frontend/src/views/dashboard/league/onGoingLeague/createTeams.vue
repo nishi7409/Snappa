@@ -78,11 +78,14 @@ import axios from 'axios';
 export default {
     data() {
       return {
-        items: [],
+        items: this.extractUsers(),
         disabledItems: [],
         map: new Map(),
     }},
     methods:{
+        extractUsers() {
+            return(JSON.parse(localStorage.getItem("allUsernamesForLeague")))
+        },
         addDisabled2(item) {
             this.disabledItems.push(item)
             console.log()
@@ -104,10 +107,10 @@ export default {
     },
     computed: {
         computeItems() {
-                return this.items.map(item => {
+            return this.items.map(item => {
                 return {
-                text: item, 
-                disabled: this.disabledItems.includes(item)
+                    text: item, 
+                    disabled: this.disabledItems.includes(item)
                 }
             })
         },
@@ -119,8 +122,8 @@ export default {
             if (response.data.response == false){
                 console.log("help")
             }else{
-                this.items = JSON.stringify(response.data.error)
-                console.log(this.items)
+                localStorage.setItem("allUsernamesForLeague", JSON.stringify(response.data.error))
+                return(undefined)
             }
         })
     }
