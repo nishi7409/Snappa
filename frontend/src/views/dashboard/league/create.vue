@@ -30,8 +30,8 @@ export default {
             axios.post("http://127.0.0.1:8000/createLeague/", {
                 ownerUsername: localStorage.getItem('username'),
                 leagueName: this.leagueName
-            }, {headers: {'Content-Type': 'application/json'}}).then(response => {
-                if (response.data.error == "User already started a league"){
+            }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+                if (response.data.response == false){
                     Vue.notify({
                         position: "top center",
                         group: "server",
@@ -55,6 +55,23 @@ export default {
                 }
             })
         }
+    },
+    mounted() {
+        axios.post("http://127.0.0.1:8000/doesLeagueExist/", {
+            username: localStorage.getItem('username'),
+        }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+            console.log(response.data)
+            if (response.data.response == true){
+                localStorage.setItem("leagueName", response.data.leagueName)
+                if (response.data.startedStatus == 1 && response.data.lengthTeams > 0) {
+                    window.location.href = `http://localhost:8080/dashboard/league/${response.data.leagueName}/bracket`
+                } else if (response.data.startedStatus == 1 && response.data.lengthTeams == 0) {
+                    window.location.href = `http://localhost:8080/dashboard/league/${response.data.leagueName}/createTeams`
+                }else {
+                    window.location.href = `http://localhost:8080/dashboard/league/${response.data.leagueName}/preview`
+                }
+            }
+        })
     }
 }
 </script>

@@ -10,4 +10,6 @@ urlpatterns = [
     path('createLeague/', LeagueCreate.as_view()),
     path('leagueAddUser/', LeagueAddUser.as_view()),
     path('allLeagueUsers/', GetActiveLeagueUsers.as_view()),
+    path('doesLeagueExist/', DoesLeagueExist.as_view()),
+    path('submitLeague/', SubmitLeague.as_view())
 ]

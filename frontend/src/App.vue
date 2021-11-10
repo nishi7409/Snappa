@@ -58,6 +58,7 @@ computed: {
 },
 methods: {
     logout() {
+        localStorage.clear()
         store.dispatch(type.logout)
         return(undefined);
     },
