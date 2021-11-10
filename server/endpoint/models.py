@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.fields import UUIDField, related
+from django.db.models.fields import NullBooleanField, UUIDField, related
 from uuid import uuid4
 
 class User(models.Model):
@@ -41,3 +41,4 @@ class League(models.Model):
     allUsers = models.ManyToManyField(User)
     allTeams = models.ManyToManyField(Team)
     allGames = models.ManyToManyField(Game)
+    started = models.IntegerField(blank=False, null=False, editable=True, default=0)
