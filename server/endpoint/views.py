@@ -72,7 +72,7 @@ class GetActiveLeagueUsers(APIView):
                 allUsers = []
                 for x in League.objects.get(leagueName=request.data['leagueName']).allUsers.all():
                     allUsers.append(x.username)
-                return Response(data={"response": True, "error": allUsers, "leagueOwner": League.objects.get(leagueName=request.data['leagueName']).ownerUsername})
+                return Response(data={"response": True, "error": allUsers, "leagueOwner": League.objects.get(leagueName=request.data['leagueName']).ownerUsername, "startedStatus": League.objects.get(leagueName=request.data['leagueName']).started})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class DoesLeagueExist(APIView):
@@ -83,4 +83,19 @@ class DoesLeagueExist(APIView):
                 return Response(data={"response": False, "error": "User doesn't own any leagues"})
             return Response(data={"response": True, "error": "User owns a leagues", "leagueName": League.objects.get(ownerUsername=request.data['username']).leagueName, "startedStatus": int(League.objects.get(ownerUsername=request.data['username']).started)})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
+class SubmitLeague(APIView):
+    def post(self, request, format=None):
+        serializer = SubmitLeagueSerializer(data=request.data)
+        if serializer.is_valid():
+            if (len(League.objects.filter(ownerUsername=request.data['username'])) == 0):
+                return Response(data={"response": False, "error": "User has not initialized a league yet"})
+            elif (League.objects.get(leagueName=request.data['leagueName']).ownerUsername != request.data['username']):
+                return Response(data={"response": False, "error": "You are not owner of this league"})
+            elif (League.objects.get(ownerUsername=request.data['username']).started == 1):
+                return Response(data={"response": False, "error": "League has already been started"})
+            currentLeague = League.objects.get(ownerUsername=request.data['username'])
+            currentLeague.started = 1
+            currentLeague.save()
+            return Response(data={"response": True, "error": "Started league"})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

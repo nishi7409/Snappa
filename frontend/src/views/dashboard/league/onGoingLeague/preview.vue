@@ -53,10 +53,10 @@
           </template>
         </v-virtual-scroll>
         <div v-if="isOwner == true">
-          <center><v-btn id="submitLeague" @click="getAllUsers()">Submit League</v-btn><span>&nbsp; &nbsp;</span><v-btn id="submitLeague" @click="deleteLeague()">Delete League</v-btn></center>
+          <center><v-btn id="submitLeague" @click="submitLeague()">Submit League</v-btn><span>&nbsp; &nbsp;</span><v-btn id="deleteLeague" @click="deleteLeague()">Delete League</v-btn></center>
         </div>
         <div v-else>
-          <center><v-btn>Confetti!</v-btn></center>
+          <center><v-btn text>🎉</v-btn></center>
         </div>
       </v-card>
     </div>
@@ -74,6 +74,32 @@
       }
     },
     methods: {
+      submitLeague() {
+        axios.post("http://127.0.0.1:8000/submitLeague/", {
+              leagueName: localStorage.getItem("leagueName"),
+              username: localStorage.getItem("username")
+          }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+              if (response.data.response == false){
+                  Vue.notify({
+                      position: "top center",
+                      group: "server",
+                      text: response.data.error,
+                      type: "error",
+                  })
+                  return(undefined);
+              }else{
+                  Vue.notify({
+                      position: "top center",
+                      group: "server",
+                      text: "Successfully started the league",
+                      type: "success",
+                  })
+                  window.setTimeout(function () {
+                      window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
+                  }, 3000)
+              }
+          })
+      },
       deleteLeague() {
         return(undefined);
       },
@@ -97,6 +123,7 @@
                   window.location.href = "http://localhost:8080/dashboard/home"
                   return(undefined);
               }else{
+                  if (response.data.startedStatus == 1) window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
                   Vue.notify({
                       position: "top center",
                       group: "server",

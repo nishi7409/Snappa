@@ -39,3 +39,11 @@ class DoesLeagueExistSerializer(serializers.ModelSerializer):
         fields = [
             "username"
         ]
+
+class SubmitLeagueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = League
+        fields = [
+            "leagueName",
+            "ownerUsername"
+        ]
