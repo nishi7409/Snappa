@@ -3,7 +3,6 @@
     <v-container>
       <v-row>
         <div class="hero">
-          <h1 class="headerSnappa">League Bracket and Leaderboard</h1><br>
           <h2>Bracket</h2> <br>
           <bracket :rounds="rounds">
             <template slot="player">

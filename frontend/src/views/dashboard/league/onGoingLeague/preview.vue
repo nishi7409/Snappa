@@ -56,7 +56,7 @@
           <center><v-btn id="submitLeague" @click="submitLeague()">Submit League</v-btn><span>&nbsp; &nbsp;</span><v-btn id="deleteLeague" @click="deleteLeague()">Delete League</v-btn></center>
         </div>
         <div v-else>
-          <center><v-btn text>🎉</v-btn></center>
+          <center><v-btn id="confetti" @click="confetti()" text>🎉</v-btn></center>
         </div>
       </v-card>
     </div>
@@ -65,6 +65,7 @@
 <script>
   import Vue from 'vue';
   import axios from 'axios';
+  import confetti from 'canvas-confetti';
   export default {
     data: function() {
       return {
@@ -74,6 +75,9 @@
       }
     },
     methods: {
+      confetti() {
+        confetti()
+      },
       submitLeague() {
         axios.post("http://127.0.0.1:8000/submitLeague/", {
               leagueName: localStorage.getItem("leagueName"),
