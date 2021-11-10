@@ -12,6 +12,7 @@ import League_Bracket from "../views/dashboard/league/onGoingLeague/bracket.vue"
 import League_StatTracker from "../views/dashboard/league/onGoingLeague/statTracker.vue";
 import Profile from "../views/dashboard/profile/profile.vue";
 import PageNotFound from "../views/404.vue";
+import LeagueOwnerPreview from "../views/dashboard/league/onGoingLeague/leagueOwnerPreview.vue";
 
 Vue.use(VueRouter)
 
@@ -111,6 +112,15 @@ const routes = [
     path: "/dashboard/profile/:username",
     name: "Dashboard_Profile",
     component: Profile,
+    meta: {
+      requiresAuth: false,
+      disableRouteIfLoggedIn: false,
+    },
+  },
+  {
+    path: "/dashboard/league/:id/ownerPreview",
+    name: "LeagueOwnerPreview",
+    component: LeagueOwnerPreview,
     meta: {
       requiresAuth: false,
       disableRouteIfLoggedIn: false,

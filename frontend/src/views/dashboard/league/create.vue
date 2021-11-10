@@ -30,7 +30,7 @@ export default {
             axios.post("http://127.0.0.1:8000/createLeague/", {
                 ownerUsername: localStorage.getItem('username'),
                 leagueName: this.leagueName
-            }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+            }, {headers: {'Content-Type': 'application/json'}}).then(response => {
                 if (response.data.error == "User already started a league"){
                     Vue.notify({
                         position: "top center",
@@ -40,6 +40,7 @@ export default {
                     })
                     return(undefined);
                 }else{
+                    this.$root.$emit('updateItems')
                     Vue.notify({
                         position: "top center",
                         group: "server",
@@ -49,7 +50,7 @@ export default {
                     window.setTimeout(function () {
                         var leagueName = response.data.leagueName
                         localStorage.setItem('leagueName', leagueName)
-                        window.location.href = `/dashboard/league/${leagueName}/preview`
+                        window.location.href = `/dashboard/league/${leagueName}/ownerPreview`
                     }, 500)
                 }
             })
