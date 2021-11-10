@@ -1,19 +1,51 @@
 <template>
-    <div class="Home">
-        <v-img
-        src = 'https://images.unsplash.com/photo-1586685984116-94cca153e792?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
-        aspect-ratio="2.06"
-        ></v-img>
-        <v-text-field class = "dataInput1">
-            <template v-slot:label>
-                <span class="inputLabel">Enter Code Here</span>
-            </template>
-        </v-text-field>
-        <v-btn id="joinButton">Join</v-btn>
-        
-
+    <div class="JoinLeague">
+        <center>
+            <v-text-field v-model="ownerUsername" name="ownerUsername" label="Enter League Owner Username"></v-text-field>
+            <v-btn id="joinLeague" @click="joinLeague()">Submit League</v-btn>
+        </center>
     </div>
 </template>
+
+<script>
+    import Vue from 'vue';
+    import axios from 'axios';
+    export default {
+        methods: {
+            joinLeague(){
+                if (this.ownerUsername == undefined || this.ownerUsername.length == 0) return(undefined);
+                console.log(this.ownerUsername)
+                axios.post("http://127.0.0.1:8000/leagueAddUser/", {
+                    ownerUsername: this.ownerUsername,
+                    username: localStorage.getItem("username")
+                }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+                    if (response.data.response == true){
+                        Vue.notify({
+                            position: "top center",
+                            group: "server",
+                            text: "Successfully added user to league",
+                            type: "success",
+                        })
+                        window.setTimeout(function () {
+                            var leagueName = response.data.leagueName
+                            localStorage.setItem('leagueName', leagueName)
+                            window.location.href = `/dashboard/league/${leagueName}/preview`
+                        }, 300)
+                        return(undefined);
+                    }else{
+                        Vue.notify({
+                            position: "top center",
+                            group: "server",
+                            text: response.data.error,
+                            type: "error",
+                        })
+                        return(undefined);
+                    }
+                })
+            }
+        }
+    }
+</script>
 
 <style>
     #joinButton {
