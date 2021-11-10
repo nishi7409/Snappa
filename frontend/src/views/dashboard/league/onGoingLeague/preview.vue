@@ -78,7 +78,7 @@
         axios.post("http://127.0.0.1:8000/submitLeague/", {
               leagueName: localStorage.getItem("leagueName"),
               username: localStorage.getItem("username")
-          }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+          }, {headers: {'Content-Type': 'application/json'}}).then(response => {
               if (response.data.response == false){
                   Vue.notify({
                       position: "top center",
@@ -95,7 +95,7 @@
                       type: "success",
                   })
                   window.setTimeout(function () {
-                      window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
+                      window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/createTeams`
                   }, 3000)
               }
           })
@@ -123,7 +123,7 @@
                   window.location.href = "http://localhost:8080/dashboard/home"
                   return(undefined);
               }else{
-                  if (response.data.startedStatus == 1) window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
+                  if (response.data.startedStatus == 1 && localStorage.getItem("username") !== response.data.leagueOwner) window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
                   Vue.notify({
                       position: "top center",
                       group: "server",

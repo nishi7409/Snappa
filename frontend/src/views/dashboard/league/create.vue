@@ -40,7 +40,6 @@ export default {
                     })
                     return(undefined);
                 }else{
-                    this.$root.$emit('updateItems')
                     Vue.notify({
                         position: "top center",
                         group: "server",
@@ -50,7 +49,7 @@ export default {
                     window.setTimeout(function () {
                         var leagueName = response.data.leagueName
                         localStorage.setItem('leagueName', leagueName)
-                        window.location.href = `/dashboard/league/${leagueName}/createTeams`
+                        window.location.href = `/dashboard/league/${leagueName}/preview`
                     }, 500)
                 }
             })

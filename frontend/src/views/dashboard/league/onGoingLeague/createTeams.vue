@@ -120,6 +120,7 @@ export default {
                 }else{
                     self.items = response.data.error
                     console.log(self.items[0])
+                    console.log("hi")
                 }
             })
 
