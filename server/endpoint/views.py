@@ -62,7 +62,7 @@ class LeagueAddUser(APIView):
 
 
 class GetActiveLeagueUsers(APIView):
-    def get(self, request, format=None):
+    def post(self, request, format=None):
         serializer = LeagueGetActiveUsersSerializer(data=request.data)
         if serializer.is_valid():
             if (len(League.objects.filter(leagueName=request.data['leagueName'])) == 0):
