@@ -78,7 +78,7 @@ import axios from 'axios';
 export default {
     data() {
       return {
-        items: ['hate','die','cry','vincent','chris','nishant','sorrya','joe'],
+        items: [],
         disabledItems: [],
         map: new Map(),
     }},
@@ -103,30 +103,25 @@ export default {
         }
     },
     computed: {
-       computeItems() {
-           return this.items.map(item => {
-            return {
-            text: item, 
-            disabled: this.disabledItems.includes(item)
-            }
-        })
-       },
-    },
-    mounted() {
-        this.$root.$on('updateItems', () => {
-            axios.post("http://127.0.0.1:8000/allLeagueUsers/", {
-              leagueName: localStorage.getItem("leagueName")
-            }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
-                if (response.data.response == false){
-                    console.log("help")
-                }else{
-                    self.items = response.data.error
-                    console.log(self.items[0])
-                    console.log("hi")
+        computeItems() {
+                return this.items.map(item => {
+                return {
+                text: item, 
+                disabled: this.disabledItems.includes(item)
                 }
             })
-
-            // your code goes here
+        },
+    },
+    beforeMount() {
+        axios.post("http://127.0.0.1:8000/allLeagueUsers/", {
+            leagueName: localStorage.getItem("leagueName")
+        }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+            if (response.data.response == false){
+                console.log("help")
+            }else{
+                this.items = JSON.stringify(response.data.error)
+                console.log(this.items)
+            }
         })
     }
 }
