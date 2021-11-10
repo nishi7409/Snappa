@@ -54,6 +54,22 @@ export default {
                 }
             })
         }
+    },
+    mounted() {
+        axios.post("http://127.0.0.1:8000/doesLeagueExist/", {
+            username: localStorage.getItem('username'),
+        }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+            console.log(response.data)
+            if (response.data.response == true){
+                localStorage.setItem("leagueName", response.data.leagueName)
+                console.log(response.data.leagueName)
+                if (response.data.startedStatus == 1) {
+                    window.location.href = `http://localhost:8080/dashboard/league/${response.data.leagueName}/bracket`
+                } else {
+                    window.location.href = `http://localhost:8080/dashboard/league/${response.data.leagueName}/preview`
+                }
+            }
+        })
     }
 }
 </script>

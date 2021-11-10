@@ -39,7 +39,7 @@ class LeagueCreate(APIView):
             if (len(League.objects.filter(ownerUsername=str(request.data['ownerUsername']))) >= 1):
                 return Response(data={"response": False, "error": "User already started a league"})
             else:
-                league = League(ownerUsername=str(request.data['ownerUsername']), leagueName=str(request.data['leagueName']))
+                league = League(ownerUsername=str(request.data['ownerUsername']), leagueName=str(request.data['leagueName']), started=0)
                 league.save()
                 return Response(data={"response": True, "error": "Created league for user", "leagueName": str(request.data['leagueName'])})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -48,7 +48,6 @@ class LeagueAddUser(APIView):
     def post(self, request, format=None):
         serializer = LeagueAddUserSerializer(data=request.data)
         if serializer.is_valid():
-            print(request.data)
             if (len(League.objects.filter(ownerUsername=request.data['ownerUsername'])) == 0):
                 return Response(data={"response": False, "error": "League owner username is invalid"})
             else:
@@ -69,8 +68,17 @@ class GetActiveLeagueUsers(APIView):
                 return Response(data={"response": False, "error": "The data for the requested league doesn't exist"})
             else:
                 allUsers = []
-                print(len(League.objects.get(leagueName=request.data['leagueName']).allUsers.all()))
                 for x in League.objects.get(leagueName=request.data['leagueName']).allUsers.all():
                     allUsers.append(x.username)
-                return Response(data={"response": True, "error": allUsers})
+                return Response(data={"response": True, "error": allUsers, "leagueOwner": League.objects.get(leagueName=request.data['leagueName']).ownerUsername})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DoesLeagueExist(APIView):
+    def post(self, request, format=None):
+        serializer = DoesLeagueExistSerializer(data=request.data)
+        if serializer.is_valid():
+            if (len(League.objects.filter(ownerUsername=request.data['username'])) == 0):
+                return Response(data={"response": False, "error": "User doesn't own any leagues"})
+            return Response(data={"response": True, "error": "User owns a leagues", "leagueName": League.objects.get(ownerUsername=request.data['username']).leagueName, "startedStatus": int(League.objects.get(ownerUsername=request.data['username']).started)})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
