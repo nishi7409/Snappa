@@ -50,7 +50,7 @@ export default {
                     window.setTimeout(function () {
                         var leagueName = response.data.leagueName
                         localStorage.setItem('leagueName', leagueName)
-                        window.location.href = `/dashboard/league/${leagueName}/ownerPreview`
+                        window.location.href = `/dashboard/league/${leagueName}/createTeams`
                     }, 500)
                 }
             })
