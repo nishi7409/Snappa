@@ -7,9 +7,9 @@
           <h2>Bracket</h2> <br>
           <bracket :rounds="rounds">
             <template slot="player">
-            team
+            Usernames
             </template>
-    </bracket>
+          </bracket>
         </div>
       </v-row>
       <v-row>
