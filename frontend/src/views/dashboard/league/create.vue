@@ -14,9 +14,6 @@
                     <v-btn id="submitLeague" @click="submitLeague()">Submit League</v-btn>
                 </center>
             </v-flex>
-            <v-flex xs4 sm4 md4 id="dataInput3">
-                <v-text-field value="Unique Code" label="Generated Code" readonly></v-text-field>
-            </v-flex>
         </v-layout>
     </v-container>
 </template>

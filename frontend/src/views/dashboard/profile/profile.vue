@@ -51,8 +51,7 @@
                 <v-row>
                     <v-col>
                         <h2>Username</h2><br>
-                        <v-text-field v-if="editPage" disabled solo label="Vincent" append-icon=""></v-text-field>
-                        <v-text-field v-else  solo label="Vincent" append-icon=""></v-text-field>
+                        <v-text-field disabled solo :label="usernameData" append-icon="">s</v-text-field>
                     </v-col>
                 </v-row>
 
@@ -107,6 +106,7 @@ axios.post("http://127.0.0.1:8000/getUserStats/", {
 export default {
     data() {
       return {
+          usernameData: localStorage.getItem("username"),
           headers: [
               {
                   text: 'Stats', value: 'stat', sortable: false, align: 'start'
