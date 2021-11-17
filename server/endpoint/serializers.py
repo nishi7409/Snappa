@@ -27,6 +27,7 @@ class LeagueCreateSerializer(serializers.ModelSerializer):
             "ownerUsername",
             "leagueName"
         ]
+        # extra key that *could* be useful
         extra_kwargs = {
             "teamLength": {"required": True}
         }

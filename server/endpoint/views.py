@@ -12,6 +12,7 @@ from rest_framework import status
 # Generate user objects when user registers for an account
 class GenerateUserObject(APIView):
     def post(self, request, format=None):
+        # serializer checks if the passed in data (json object) meets the desired requirements
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             if (len(User.objects.filter(username=str(request.data['username']))) == 1):
@@ -27,6 +28,7 @@ class GenerateUserObject(APIView):
 # Return user stats to the profile page
 class GenerateUserStats(APIView):
     def post(self, request, format=None):
+        # serializer checks if the passed in data (json object) meets the desired requirements
         serializer = StatSerializer(data = request.data)
         tmpName = str(request.data['username'])
         if serializer.is_valid():
@@ -52,6 +54,7 @@ class GenerateUserStats(APIView):
 # Creating a league object based off passed in JSON key information
 class LeagueCreate(APIView):
     def post(self, request, format=None):
+        # serializer checks if the passed in data (json object) meets the desired requirements
         serializer = LeagueCreateSerializer(data=request.data)
         if serializer.is_valid():
             if (len(League.objects.filter(ownerUsername=str(request.data['ownerUsername']))) >= 1):
@@ -67,6 +70,7 @@ class LeagueCreate(APIView):
 # Add a user to a league
 class LeagueAddUser(APIView):
     def post(self, request, format=None):
+        # serializer checks if the passed in data (json object) meets the desired requirements
         serializer = LeagueAddUserSerializer(data=request.data)
         if serializer.is_valid():
             if (len(League.objects.filter(ownerUsername=request.data['ownerUsername'])) == 0):
@@ -83,6 +87,7 @@ class LeagueAddUser(APIView):
 # Get all active league users (all users that have joined the league)
 class GetActiveLeagueUsers(APIView):
     def post(self, request, format=None):
+        # serializer checks if the passed in data (json object) meets the desired requirements
         serializer = LeagueGetActiveUsersSerializer(data=request.data)
         if serializer.is_valid():
             if (len(League.objects.filter(leagueName=request.data['leagueName'])) == 0):
@@ -97,6 +102,7 @@ class GetActiveLeagueUsers(APIView):
 # Checks if league exists
 class DoesLeagueExist(APIView):
     def post(self, request, format=None):
+        # serializer checks if the passed in data (json object) meets the desired requirements
         serializer = DoesLeagueExistSerializer(data=request.data)
         if serializer.is_valid():
             if (len(League.objects.filter(ownerUsername=request.data['username'])) == 0):
@@ -114,6 +120,7 @@ class DoesLeagueExist(APIView):
 # Activates a league
 class SubmitLeague(APIView):
     def post(self, request, format=None):
+        # serializer checks if the passed in data (json object) meets the desired requirements
         serializer = SubmitLeagueSerializer(data=request.data)
         if serializer.is_valid():
             if (len(League.objects.filter(ownerUsername=request.data['username'])) == 0):
@@ -131,6 +138,7 @@ class SubmitLeague(APIView):
 # Deletes a league
 class DeleteLeague(APIView):
     def post(self, request, format=None):
+        # serializer checks if the passed in data (json object) meets the desired requirements
         serializer = DeleteLeagueSerializer(data=request.data)
         if serializer.is_valid():
             if (len(League.objects.filter(ownerUsername=request.data['username'])) == 0):
