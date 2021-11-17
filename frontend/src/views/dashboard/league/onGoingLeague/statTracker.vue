@@ -1,11 +1,11 @@
 <template>
     <v-container fluid fill-height class="StatTracker">
+        <!-- Sets the top title text where the user can view which team is versing which -->
         <center><span id="bracketOptions">TEAM vs TEAM</span></center>
         <v-layout row wrap>
             <v-text xs4 sm4 md4 id="Playing">
                 <span id="Player">Playing: Chris</span>
             </v-text>
-            <!-- xs12 and sm12 to make it responsive = 12 columns on mobile and 6 columns from medium to XL layouts -->
             <v-flex xs4 sm4 md4 id="Shot">
                 <center><v-checkbox v-model="checkbox" :label="`Shot`"></v-checkbox></center>
             </v-flex>

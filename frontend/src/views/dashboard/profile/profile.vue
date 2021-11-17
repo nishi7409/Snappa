@@ -85,8 +85,10 @@
 
 <script>
 
+/* Axios post is used as a way to "send" data over the API, here we send the username of
+the user to the getUserStats URL for the API to then response with the stats of that user
+which is then stored in the localstorage */
 import axios from 'axios';
-
 axios.post("http://127.0.0.1:8000/getUserStats/", {
               username: localStorage.getItem("username")
           }).then(function (response) {
