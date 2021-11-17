@@ -3,7 +3,7 @@
         <v-layout row wrap>
             <!-- xs12 and sm12 to make it responsive = 12 columns on mobile and 6 columns from medium to XL layouts -->
             <v-flex xs4 sm4 md4 id="dataInput1">
-                <center><v-text-field label="Enter # of Teams"></v-text-field></center>
+                <center><v-text-field v-model="numberTeams" name="numberTeams" label="Enter # of Teams"></v-text-field></center>
             </v-flex>
             <v-flex xs4 sm4 md4 id="dataInput2">
                 <center>
@@ -26,7 +26,8 @@ export default {
         submitLeague() {
             axios.post("http://127.0.0.1:8000/createLeague/", {
                 ownerUsername: localStorage.getItem('username'),
-                leagueName: this.leagueName
+                leagueName: this.leagueName,
+                teamLength: this.numberTeams
             }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
                 if (response.data.response == false){
                     Vue.notify({

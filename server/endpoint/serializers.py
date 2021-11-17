@@ -2,6 +2,9 @@ from django.db.models import fields
 from rest_framework import serializers
 from .models import *
 
+"""
+Serializer to make sure input (JSON) is valid with the correct passed in keys
+"""
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -24,6 +27,9 @@ class LeagueCreateSerializer(serializers.ModelSerializer):
             "ownerUsername",
             "leagueName"
         ]
+        extra_kwargs = {
+            "teamLength": {"required": True}
+        }
 
 class LeagueAddUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,6 +37,7 @@ class LeagueAddUserSerializer(serializers.ModelSerializer):
         fields = [
             "username"
         ]
+        # extra key that *could* be useful
         extra_kwargs = {
             "ownerUsername": {"required": True}   
         }
