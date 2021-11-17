@@ -31,11 +31,10 @@
             <!-- Submit button -->
             <v-btn id="submit">Submit</v-btn>
         </v-layout>
-
+  
         <!-- Holds the scores for each team viewable at the bottom of the page -->
         <v-container id="Score">
             <span id="ScoreText">TEAM</span>
-            
         </v-container>
         <v-container id="Score2">
             <span id="ScoreText">TEAM</span>
@@ -47,7 +46,8 @@
 <script>
   export default {
     data: () => ({
-      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+        // item container that is the list in the dropdown box for which player caught the die
+        items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
     }),
   }
 </script>
