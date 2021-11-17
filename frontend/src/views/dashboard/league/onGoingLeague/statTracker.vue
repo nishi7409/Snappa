@@ -3,6 +3,8 @@
         <!-- Sets the top title text where the user can view which team is versing which -->
         <center><span id="bracketOptions">TEAM vs TEAM</span></center>
         <v-layout row wrap>
+
+            <!-- Here are the buttons and checkboxes that are in the middle of the page each have a seperate style associated -->
             <v-text xs4 sm4 md4 id="Playing">
                 <span id="Player">Playing: Chris</span>
             </v-text>
@@ -26,8 +28,11 @@
                 <center><v-select :items="items" label="Who Caught?" solo></v-select></center>
             </v-flex>
 
+            <!-- Submit button -->
             <v-btn id="submit">Submit</v-btn>
         </v-layout>
+
+        <!-- Holds the scores for each team viewable at the bottom of the page -->
         <v-container id="Score">
             <span id="ScoreText">TEAM</span>
             
