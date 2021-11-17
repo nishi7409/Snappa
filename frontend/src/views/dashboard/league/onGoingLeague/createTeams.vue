@@ -58,7 +58,7 @@
                 </v-col>
             </v-row>
         <div class="rtl">
-          <v-btn large fixed bottom color="primary">
+          <v-btn large fixed bottom color="primary" @click="finalizeTeams()">
             Finalize Teams
          </v-btn>
         </div>  
@@ -83,6 +83,9 @@ export default {
         map: new Map(),
     }},
     methods:{
+        finalizeTeams() {
+            return(undefined);
+        },
         extractUsers() {
             return(JSON.parse(localStorage.getItem("allUsernamesForLeague")))
         },
