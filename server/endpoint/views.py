@@ -25,15 +25,11 @@ class GenerateUserObject(APIView):
                 return Response(data={"response": True, "error": "THIS SHOULDN'T APPEAR"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-<<<<<<< Updated upstream
-# Return user stats to the profile page
-=======
 # GenerateUserStats sends all stats of a user to the API endpoint under the URL getUserStats/ in JSON format
 # Inputs:
 #   User
 # Outputs:
 #   stats of the user
->>>>>>> Stashed changes
 class GenerateUserStats(APIView):
     def post(self, request, format=None):
         # serializer checks if the passed in data (json object) meets the desired requirements

@@ -15,9 +15,6 @@
         <h3>Leaderboard</h3><br>
         <v-data-table dense :headers="headers" :items="teams" item-key="name" class="elevation-1">
         </v-data-table>
-        <!-- look up how to import a component -->
-        <!-- the component would be leadboard.vue -->
-        <!-- it should be something like <leaderboard/> but you need to add it to the export crap -->
       </v-row>
     </v-container>
   </div>
@@ -25,9 +22,8 @@
 
 <script>
   import Bracket from "vue-tournament-bracket";
-  
-    const rounds = [
     //Round of 8
+    const rounds = [
         {
           games: [
               {
@@ -79,6 +75,7 @@
           ]
         }
     ];
+    // headers to the leaderboard
     const headers= [
         {
           text: 'Team Name',
@@ -97,6 +94,7 @@
 				{ text: 'Table Hit %: #', value: 'table_hit_p' },
 				{ text: 'PP %: #', value: 'p_point_p' },
       ],
+      // dummy data
       teams= [
         {
           name: 'Team 1',
@@ -209,6 +207,7 @@
             Bracket
         },
         data() {
+          // returned data
             return {
                 rounds: rounds,
                 headers: headers,

@@ -29,10 +29,12 @@ export default {
         }
     },
     methods: {
+        // redirect to create league page
         create() {
             window.location.href = "/dashboard/league/create";
             return(undefined);
         },
+        // redirect to join league page
         join() {
             window.location.href = "/dashboard/league/join";
             return(undefined);

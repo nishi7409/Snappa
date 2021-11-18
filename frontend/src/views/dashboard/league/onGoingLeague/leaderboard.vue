@@ -10,6 +10,7 @@
 
 <script>
   export default {
+    // dummy data for now
     data: () => ({
 			headers: [
         {

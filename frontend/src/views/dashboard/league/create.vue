@@ -23,13 +23,19 @@ import Vue from 'vue';
 import axios from 'axios';
 export default {
     methods: {
+        // submit league information to backend
         submitLeague() {
+            // POST request to /createLeague/
             axios.post("http://127.0.0.1:8000/createLeague/", {
+                // owner username (current user)
                 ownerUsername: localStorage.getItem('username'),
+                // league name
                 leagueName: this.leagueName,
+                // team length (how many teams)
                 teamLength: this.numberTeams
             }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
                 if (response.data.response == false){
+                    // fail response
                     Vue.notify({
                         position: "top center",
                         group: "server",
@@ -38,12 +44,14 @@ export default {
                     })
                     return(undefined);
                 }else{
+                    // successful response
                     Vue.notify({
                         position: "top center",
                         group: "server",
                         text: "Successfully created a league",
                         type: "success",
                     })
+                    // redirect in 5 ms
                     window.setTimeout(function () {
                         var leagueName = response.data.leagueName
                         localStorage.setItem('leagueName', leagueName)
@@ -53,18 +61,23 @@ export default {
             })
         },
     },
+    // on page load
     mounted() {
+        // check if user owns a league, POST request to /doesLeagueExist/
         axios.post("http://127.0.0.1:8000/doesLeagueExist/", {
             username: localStorage.getItem('username'),
         }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
             console.log(response.data)
             if (response.data.response == true){
                 localStorage.setItem("leagueName", response.data.leagueName)
+                // if owner owns a league and it has started, send to bracket page
                 if (response.data.startedStatus == 1 && response.data.lengthTeams > 0) {
                     window.location.href = `http://localhost:8080/dashboard/league/${response.data.leagueName}/bracket`
                 } else if (response.data.startedStatus == 1 && response.data.lengthTeams == 0) {
+                    // if owner does own a league but it's team length is 0, redirect to createTeams
                     window.location.href = `http://localhost:8080/dashboard/league/${response.data.leagueName}/createTeams`
                 }else {
+                    // if user is part of a league, take user to league they're in
                     window.location.href = `http://localhost:8080/dashboard/league/${response.data.leagueName}/preview`
                 }
             }

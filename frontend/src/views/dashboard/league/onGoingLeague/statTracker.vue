@@ -45,6 +45,7 @@
 
 <script>
   export default {
+    //   dummy data
     data: () => ({
         // item container that is the list in the dropdown box for which player caught the die
         items: ['Foo', 'Bar', 'Fizz', 'Buzz'],

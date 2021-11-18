@@ -89,6 +89,7 @@
 the user to the getUserStats URL for the API to then response with the stats of that user
 which is then stored in the localstorage */
 import axios from 'axios';
+// get all stats for current logged in user
 axios.post("http://127.0.0.1:8000/getUserStats/", {
               username: localStorage.getItem("username")
           }).then(function (response) {
@@ -174,10 +175,12 @@ export default {
       }
    },
     methods: {
+        // set information 
         setValue(bool){
             this.pageLook = bool
             console.log(this.pageLook)
         },
+        // edit data
         editPageFunc(bool){
             this.editPage = bool
             

@@ -12,9 +12,11 @@
     import axios from 'axios';
     export default {
         methods: {
+            // joins a league based off league owner name
             joinLeague(){
+                // if the field is blank, return undefined
                 if (this.ownerUsername == undefined || this.ownerUsername.length == 0) return(undefined);
-                console.log(this.ownerUsername)
+                // POST request to /leagueAddUser/
                 axios.post("http://127.0.0.1:8000/leagueAddUser/", {
                     ownerUsername: this.ownerUsername,
                     username: localStorage.getItem("username")

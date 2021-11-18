@@ -74,6 +74,7 @@ export default {
       }
    },
    methods: {
+      // dispatches register handler with username, email & passwords parameters
       register() {
          store.dispatch(type.register, {"username": this.username, "email": this.email, "password1": this.password1, "password2": this.password2})
       }

@@ -55,11 +55,13 @@ export default {
       }
    },
    methods: {
+      // dispatches login handler with username & password parameters
       login() {
          store.dispatch(type.login, {"username": this.username, "password": this.password})
       }
    },
    computed: {
+      // token key for local storage
       ...mapState({
          sessionKey: 'token',
       })
