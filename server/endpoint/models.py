@@ -29,6 +29,7 @@ class User(models.Model):
 - totalPoints --> all the stats added up
 """
 class GameScoreboard(models.Model):
+    boardid = models.CharField(blank=False, null=False, editable=True, max_length=256)
     stat1 = models.IntegerField(null=False, blank=False, default=0, editable=True)
     stat2 = models.IntegerField(null=False, blank=False, default=0, editable=True)
     stat3 = models.IntegerField(null=False, blank=False, default=0, editable=True)
@@ -53,6 +54,7 @@ class Team(models.Model):
 - winner --> OneToOne relationship to the winning team object
 """
 class Game(models.Model):
+    gameid = models.CharField(blank=False, null=False, editable=True, max_length=256)
     team1 = models.OneToOneField(Team, related_name="team1", on_delete=models.CASCADE)
     team2 = models.OneToOneField(Team, related_name="team2", on_delete=models.CASCADE)
     winner = models.OneToOneField(Team, related_name="winnerTeam", on_delete=models.CASCADE)
