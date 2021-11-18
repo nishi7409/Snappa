@@ -39,4 +39,7 @@ class UserTestCase(TestCase):
         score.stat1 += 1
         self.assertEqual(score.stat1, 1)
 
+        score.stat1 += 123
+        self.assertEqual(score.stat1, 124)
+
     
