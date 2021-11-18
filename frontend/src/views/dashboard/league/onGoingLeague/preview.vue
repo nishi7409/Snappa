@@ -117,6 +117,8 @@
                   }, 3000)
               }
           })
+        }
+        
       },
       // delete league
       deleteLeague() {

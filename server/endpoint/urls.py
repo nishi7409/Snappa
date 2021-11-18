@@ -15,4 +15,5 @@ urlpatterns = [
     path('doesLeagueExist/', DoesLeagueExist.as_view()),
     path('submitLeague/', SubmitLeague.as_view()),
     path('deleteLeague/', DeleteLeague.as_view()),
+    path('addTeamToLeague/', addTeamToLeague.as_view()),
 ]

@@ -69,3 +69,14 @@ class DeleteLeagueSerializer(serializers.ModelSerializer):
         fields = [
             "username"
         ]
+
+class addTeamToLeagueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = [
+            "name",
+        ]
+
+        # extra_kwargs = {
+        #     "ownerUsername": {"required": True}   
+        # }

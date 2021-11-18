@@ -109,7 +109,7 @@ class GetActiveLeagueUsers(APIView):
                 allUsers = []
                 for x in League.objects.get(leagueName=request.data['leagueName']).allUsers.all():
                     allUsers.append(x.username)
-                return Response(data={"response": True, "error": allUsers, "leagueOwner": League.objects.get(leagueName=request.data['leagueName']).ownerUsername, "startedStatus": League.objects.get(leagueName=request.data['leagueName']).started})
+                return Response(data={"response": True, "error": allUsers, "leagueOwner": League.objects.get(leagueName=request.data['leagueName']).ownerUsername, "startedStatus": League.objects.get(leagueName=request.data['leagueName']).started, "teamLength": int(League.objects.get(leagueName=request.data['leagueName']).teamLength)})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Checks if league exists
@@ -153,6 +153,28 @@ class SubmitLeague(APIView):
             currentLeague.save()
             return Response(data={"response": True, "error": "Started league"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Create a team and add to league
+class addTeamToLeague(APIView):
+    def post(self, request, format=None):
+        serializer = addTeamToLeagueSerializer(data=request.data)
+        print("YES?")
+        if serializer.is_valid():
+            print("YES?2")
+            if (len(League.objects.filter(ownerUsername=request.data['ownerUsername'])) == 0):
+                return Response(data={"response": False, "error": "This league doesn't exist"})
+            if (len(Team.objects.filter(name=request.data['name'])) != 0):
+                return Response(data={"response": False, "error": "This team name is taken"})
+            print("YES?3")
+            currentTeam = Team(name = str(request.data['name']), user1 = User.objects.get(username=str(request.data['user1'])), user2 = User.objects.get(username=str(request.data['user2'])))
+            print("YES?4")
+            currentTeam.save()
+            league = League.objects.get(ownerUsername=request.data['ownerUsername'])    
+            league.allTeams.add(currentTeam)
+            print("YES?5")
+            return Response(data={"response": True, "error": "Successfully added the team"})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # Deletes a league
 class DeleteLeague(APIView):
