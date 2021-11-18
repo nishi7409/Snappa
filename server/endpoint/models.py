@@ -72,6 +72,7 @@ class LeagueOptions(models.Model):
 - ownerUsername --> league owner username
 - leagueName --> league name
 - leagueOptions --> ManyToMany relationship to LeagueOptions object (not really being utilized right now)
+- teamLength --> Integer field representing how many teams exist in league
 - allUsers --> ManyToMany relationship to all users in league
 - allteams --> ManyToMany relationship to all teams in league
 - allGames --> ManyToMany relationship to all games occuring in league
@@ -81,7 +82,7 @@ class League(models.Model):
     ownerUsername = models.CharField(blank=False, null=False, editable=False, max_length=256)
     leagueName = models.CharField(blank=False, null=False, editable=True, max_length=256)
     leagueOptions = models.ManyToManyField(LeagueOptions)
-    teamLength = models.IntegerField(null=False, blank=False, default=2, editable=True)
+    teamLength = models.IntegerField(null=False, blank=False, default=0 , editable=True)
     allUsers = models.ManyToManyField(User)
     allTeams = models.ManyToManyField(Team)
     allGames = models.ManyToManyField(Game)
