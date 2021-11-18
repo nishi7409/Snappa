@@ -54,9 +54,9 @@
                         <v-text-field disabled solo :label="usernameData" append-icon="">s</v-text-field>
                     </v-col>
                 </v-row>
-<!-- v-if="localStorage.getItem('username') == usernameData" -->
-                <v-row >
-                    <v-col v-if="validUser()">
+
+                <v-row>
+                    <v-col>
                         <v-btn v-if="editPage" @click="editPageFunc(false)">Edit Page</v-btn> 
                         <v-btn v-else @click="editPageFunc(true)">Save</v-btn>
                     </v-col>
@@ -109,7 +109,7 @@ axios.post("http://127.0.0.1:8000/getUserStats/", {
 export default {
     data() {
       return {
-          usernameData: this.$route.params.username,
+          usernameData: localStorage.getItem("username"),
           headers: [
               {
                   text: 'Stats', value: 'stat', sortable: false, align: 'start'
@@ -175,10 +175,6 @@ export default {
       }
    },
     methods: {
-        // Check for valid users
-        validUser() {
-            return localStorage.getItem('username') == this.usernameData
-        },
         // set information 
         setValue(bool){
             this.pageLook = bool
@@ -189,7 +185,7 @@ export default {
             this.editPage = bool
             
         }
-    },
+    }
 }
 </script>
 

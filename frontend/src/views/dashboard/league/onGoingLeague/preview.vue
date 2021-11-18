@@ -23,7 +23,7 @@
               </v-list-item-content>
               <div v-if="isOwner == true">
                 <v-list-item-action>
-                  <v-btn :href="'http://localhost:8080/dashboard/profile/'+item" depressed text>
+                  <v-btn href="google.com" depressed text>
                     User Stats
                     <v-icon color="orange darken-4" right>
                       mdi-open-in-new
@@ -41,7 +41,7 @@
               </div>
               <div v-else>
                 <v-list-item-action>
-                  <v-btn :href="'http://localhost:8080/dashboard/profile/'+item" depressed text>
+                  <v-btn href="google.com" depressed text>
                     User Stats
                     <v-icon color="orange darken-4" right>
                       mdi-open-in-new
