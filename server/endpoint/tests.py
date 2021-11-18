@@ -1,3 +1,4 @@
+from logging import StringTemplateStyle
 from django.test import TestCase
 from .models import *
 
@@ -27,16 +28,25 @@ class UserTestCase(TestCase):
 
         Game.objects.create(gameid = "game1", team1 = team1, team2 = team2, winner = team1)
 
+        League.objects.create(ownerUsername="ChrisNg", leagueName="AmazingLeague", teamLength=10, started=0)
+
+    def test_four_users(self):
+        self.assertEqual(len(User.objects.all()), 4)
+
     def test_user_stats(self):
         user1 = User.objects.get(username = "ChrisNg")
         user2 = User.objects.get(username = "Nishi")
         self.assertEqual(user1.stat1, 0)
         self.assertEqual(user2.stat1, 101)
 
+    def test_league_created(self):
+        self.assertEqual(len(League.objects.all()), 1)
+
+    def test_league_created_name(self):
+        self.assertEqual(League.objects.get(ownerUsername="ChrisNg").leagueName, "AmazingLeague")
+
     def test_game(self):
         game = Game.objects.get(gameid = "game1")
         score = game.team1.team1Scoreboard.get(boardid = "score1")
         score.stat1 += 1
         self.assertEqual(score.stat1, 1)
-
-    
