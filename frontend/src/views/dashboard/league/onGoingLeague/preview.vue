@@ -85,9 +85,16 @@
       },
       // submit league data to backend
       submitLeague() {
-        // POST request to /submitleague/
-        axios.post("http://127.0.0.1:8000/submitLeague/", {
-              // league name
+        // This is commented out for testing purposes, reenable for production
+        if (this.usernames.length % 2 != 0){
+          Vue.notify({
+              position: "top center",
+              group: "server",
+              text: "Must have even number of players!",
+              type: "error",
+          })
+        }else{
+          axios.post("http://127.0.0.1:8000/submitLeague/", {
               leagueName: localStorage.getItem("leagueName"),
               // all users associated with league
               username: localStorage.getItem("username")
