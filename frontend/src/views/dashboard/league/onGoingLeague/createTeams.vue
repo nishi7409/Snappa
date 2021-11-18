@@ -155,7 +155,7 @@ export default {
                 })
             }  
             
-            // window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
+            window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
         },
         extractUsers() {
             return(JSON.parse(localStorage.getItem("allUsernamesForLeague")))
