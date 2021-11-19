@@ -62,6 +62,7 @@ export default {
         teamMap: new Map(),
     }},
     methods:{
+        // Deleltes a league using an endpoint
         deleteLeague() {
         axios.post("http://127.0.0.1:8000/deleteLeague/", {
             username: localStorage.getItem('username'),
@@ -91,20 +92,17 @@ export default {
             }
         })
       },
+      // Updates the teams map with their name using their id
         updateTeams(id, teamName) {
-            console.log(id)
-            if (this.teamMap.get(id) == null){
-                console.log("No bueno")
-            }else{
-                var teamList = this.teamMap.get(id)
-                teamList[0] = teamName
-                this.teamMap.set(id, teamList)
-            }
-            console.log("test:" + this.teamMap.get(id))
+            var teamList = this.teamMap.get(id)
+            teamList[0] = teamName
+            this.teamMap.set(id, teamList)
         },
+        // Checks if the array has any duplicates
         hasDuplicates(array) {
             return (new Set(array)).size !== array.length;
         },
+        // Finalizes teams by taking in all team inputs and using a post request to create teams using data 
         finalizeTeams() {
             var teamNames = []
             for (var x = 0; x < JSON.parse(localStorage.getItem("teamLength")); x++){
@@ -117,7 +115,6 @@ export default {
                         text: "All teams need to be filled before starting games!",
                         type: "error",
                     })
-                    //send vue notification
                     return
                 }
             }
@@ -128,7 +125,6 @@ export default {
                     text: "Duplicate team names are not allowed!",
                     type: "error",
                 })
-                //send vue notification
                 return
             }
             //Successful team matching
@@ -138,7 +134,6 @@ export default {
                     user1: this.teamMap.get(y)[1],
                     user2: this.teamMap.get(y)[2],
                     ownerUsername: localStorage.getItem('username'),
-                    // localStorage.getItem("username")"
                 }, {headers: {'Content-Type': 'application/json'}}).then(response => {
                     if (response.data.response == false){
                         Vue.notify({
@@ -155,24 +150,27 @@ export default {
                 })
             }  
             
-            // window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
+            window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
         },
+        // Takes users from the localstorage
         extractUsers() {
             return(JSON.parse(localStorage.getItem("allUsernamesForLeague")))
         },
+        // Add to the disabled list as well as map the items map 
         addDisabled(item,id, index) {
+            // Check if id exists as a key in map
+            // If it doesn't, add it to the map as push the item to the disabled list
+            // If it does, delete the disabled item and update the map using the id as the key
             if (this.map.get(id) == null){
                 this.map.set(id, item)
                 this.disabledItems.push(item)
             }else if(this.map.get(id) != null){
                 console.log(this.map.get(id))
-                
                 this.disabledItems.splice(this.disabledItems.indexOf(this.map.get(id)), 1)
-                console.log(this.disabledItems[0])
                 this.map.set(id, item)
                 this.disabledItems.push(item)
             }
-
+            // Updates the team map with the teammates
             var newList = this.teamMap.get(index)
             if (id.includes("a")){
                 newList[1] = item
@@ -185,6 +183,7 @@ export default {
         }
     },
     computed: {
+        // Determines what items should be disabled
         computeItems() {
             return this.items.map(item => {
                 return {
