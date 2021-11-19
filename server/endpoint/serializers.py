@@ -80,3 +80,18 @@ class addTeamToLeagueSerializer(serializers.ModelSerializer):
         # extra_kwargs = {
         #     "ownerUsername": {"required": True}   
         # }
+
+class enterStatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        field = [
+            "gameid"
+            "team"
+            "player"
+            "shot"
+            "tableHit"
+            "point"
+            "clink"
+            "dunk"
+            "catcher"
+        ]

@@ -29,7 +29,7 @@
             </v-flex>
 
             <!-- Submit button -->
-            <v-btn id="submit">Submit</v-btn>
+            <v-btn id="submit" @click="submitStats()">Submit</v-btn>
         </v-layout>
   
         <!-- Holds the scores for each team viewable at the bottom of the page -->
@@ -50,6 +50,22 @@
         // item container that is the list in the dropdown box for which player caught the die
         items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
     }),
+    methods:{
+        submitStats() {
+            axios.post("http://127.0.0.1:8000/enterStats/", {
+                gameid: localStorage.getItem('gameid'),
+                team: localStorage.getItem('team'),
+                player: localStorage.getItem('player'),
+                shot: localStorage.getItem('shot'),
+                tableHit: localStorage.getItem('tableHit'),
+                point: localStorage.getItem('point'),
+                clink: localStorage.getItem('clink'),
+                dunk: localStorage.getItem('dunk'),
+                catcher: localStorage.getItem('catcher'),
+
+            })
+        }
+    },
   }
 </script>
 

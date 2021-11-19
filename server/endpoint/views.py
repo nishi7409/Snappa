@@ -189,3 +189,16 @@ class DeleteLeague(APIView):
             League.objects.filter(ownerUsername=request.data['username']).delete()
             return Response(data={"response": True, "error": "Deleted league owned by user"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class enterStats(APIView):
+    def post(self, request, format=None):
+        
+        serializer = enterStatsSerializer(data=request.data)
+        if serializer.is_valid():
+            if (len(Game.objects.filter(gameid = request.data['gameid'])) == 0):
+                return Response(data={"response": False})
+
+            tmpGame = Game.objects.get(gameid = request.data['gameid'])
+            
+            return Response(data={"response": True})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
