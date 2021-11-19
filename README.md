@@ -21,6 +21,12 @@ Throughout college campuses around the globe, “Snappa” is a popular game pla
 <br>
 Our new and interactive web application will contain user-friendly features that would allow the users to easily track and publicly or privately display their information to the world or friends and family. The application will also contain a practical user-inputted statistic tracking system to help keep track of statistics, a personalized user statistic page that holds tables and charts mapping the statistics of a user, and a league creation section where users can sign up to play with their friends in a structured competition.
 
+## Diagrams
+### Sequence Diagram
+https://drive.google.com/file/d/1o_fpSizzXChjeOOFMZjfQ919NSruJgVp/view
+### Static Class Diagram
+https://drive.google.com/file/d/1tptG2AVWkjq09E9yjmtcZ7dh78kLUUBI/view
+### 
 
 ## Developmental Setup
 ### Frontend
