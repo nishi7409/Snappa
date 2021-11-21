@@ -213,6 +213,7 @@ class enterStats(APIView):
                 tmpTeam.user2.stat5 += request.data['clink']
                 tmpTeam.user2.stat6 += request.data['dunk']
             
+            tmpTeam.team1Scoreboard += request.data['point']
 
             return Response(data={"response": True})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
