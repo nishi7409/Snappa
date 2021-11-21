@@ -83,15 +83,14 @@ class addTeamToLeagueSerializer(serializers.ModelSerializer):
 
 class enterStatsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Game
+        model = Team
         field = [
-            "gameid"
-            "team"
-            "player"
-            "shot"
-            "tableHit"
-            "point"
-            "clink"
-            "dunk"
+            "team",
+            "player",
+            "shot",
+            "tableHit",
+            "point",
+            "clink",
+            "dunk",
             "catcher"
         ]
