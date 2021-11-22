@@ -175,6 +175,23 @@ class addTeamToLeague(APIView):
             return Response(data={"response": True, "error": "Successfully added the team"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Get all active teams (all teams that have joined the league)
+class GetActiveTeamsInLeague(APIView):
+    def post(self, request, format=None):
+        # serializer checks if the passed in data (json object) meets the desired requirements
+        serializer = LeagueGetTeamsSerializer(data=request.data)
+        if serializer.is_valid():
+            #checks for valid league name
+            if (len(League.objects.filter(leagueName=request.data['leagueName'])) == 0):
+                return Response(data={"response": False, "error": "The data for the requested league doesn't exist"})
+            else:
+                #returns all teams of the league
+                allTeams = []
+                # for x in League.objects.get(leagueName=request.data['leagueName']).allTeams.all():
+                #     allTeams.append(x)
+                allTeams = League.objects.get(leagueName=request.data['leagueName']).allTeams.all()
+                return Response(data={"response": True, "error": allTeams})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Deletes a league
 class DeleteLeague(APIView):
