@@ -11,7 +11,7 @@
 
         <v-divider></v-divider>
 
-        <v-virtual-scroll :items="usernames" :item-height="60" height="100%">
+        <v-virtual-scroll :items="usernames" :item-height="50">
           <template v-slot:default="{ item }">
             <v-list-item>
               <v-list-item-avatar>
