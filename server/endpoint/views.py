@@ -186,10 +186,12 @@ class GetActiveTeamsInLeague(APIView):
                 return Response(data={"response": False, "error": "The data for the requested league doesn't exist"})
             else:
                 #returns all teams of the league
-                allTeams = []
-                # for x in League.objects.get(leagueName=request.data['leagueName']).allTeams.all():
-                #     allTeams.append(x)
-                allTeams = League.objects.get(leagueName=request.data['leagueName']).allTeams.all()
+                teamsInLeague = []
+                # for x in League.objects.get(leagueName=request.data['leagueName']).teamsInLeague.all():
+                #     teamsInLeague.append(x)
+                # league = League.objects.get(ownerUsername=request.data['ownerUsername'])    
+                # teamsInLeague = league.allTeams
+                teamsInLeague = League.objects.get(leagueName=request.data['leagueName']).allTeams.all()
                 return Response(data={"response": True, "error": allTeams})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

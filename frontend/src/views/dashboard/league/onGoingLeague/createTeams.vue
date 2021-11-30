@@ -62,7 +62,7 @@ export default {
         teamMap: new Map(),
     }},
     methods:{
-        // Deleltes a league using an endpoint
+        // Deletes a league using an endpoint
         deleteLeague() {
         axios.post("http://127.0.0.1:8000/deleteLeague/", {
             username: localStorage.getItem('username'),
