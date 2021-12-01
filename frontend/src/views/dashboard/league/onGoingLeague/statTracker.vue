@@ -25,7 +25,10 @@
             </v-flex>
             
             <v-flex xs4 sm4 md4 id="catchDropDown">
-                <center><v-select :items="items" label="Who Caught?" solo></v-select></center>
+                <center><v-select 
+                            v-model="selectedCatch" 
+                            :items="items" 
+                            label="Who Caught?" solo></v-select></center>
             </v-flex>
 
             <!-- Submit button -->
@@ -43,15 +46,18 @@
     </v-container>
 </template>
 
-<script>
+<script> 
+  import axios from 'axios';  
   export default {
     //   dummy data
     data: () => ({
         // item container that is the list in the dropdown box for which player caught the die
         items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+        selectedCatch: null
     }),
     methods:{
         submitStats() {
+            localStorage.setItem('catcher', this.selectedCatch)
             axios.post("http://127.0.0.1:8000/enterStats/", {
                 team: localStorage.getItem('team'),
                 player: localStorage.getItem('player'),
@@ -65,17 +71,21 @@
             }, {headers: {'Content-Type': 'application/json'}}).then(response => {
                 if (response.data.response == true){
                     /* REFRESH PAGE HERE WIPE LOCAL DATA */
+                    localStorage.setItem('team', '')
+                    localStorage.setItem('player', '')
                     this.shot = false
                     this.tablehit = false
                     this.point = false
                     this.clink = false
                     this.dunk = false
+                    localStorage.setItem('catcher', '')
                 } else{
                     /* ERROR MESSAGE */
                     console.log("ERROR: Could not post")
                 }
                     
             })
+            window.location.reload()
         }
     },
   }
