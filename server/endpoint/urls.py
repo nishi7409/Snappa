@@ -16,4 +16,5 @@ urlpatterns = [
     path('submitLeague/', SubmitLeague.as_view()),
     path('deleteLeague/', DeleteLeague.as_view()),
     path('addTeamToLeague/', addTeamToLeague.as_view()),
+    path('enterStats/', enterStats.as_view()),
 ]

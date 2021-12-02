@@ -9,27 +9,30 @@
                 <span id="Player">Playing: Chris</span>
             </v-text>
             <v-flex xs4 sm4 md4 id="Shot">
-                <center><v-checkbox v-model="checkbox" :label="`Shot`"></v-checkbox></center>
+                <center><v-checkbox v-model="shot" :label="`Shot`"></v-checkbox></center>
             </v-flex>
             <v-flex xs4 sm4 md4 id="TableHit">
-                <center><v-checkbox v-model="checkbox" :label="`Table Hit`"></v-checkbox></center>
+                <center><v-checkbox v-model="tablehit" :label="`Table Hit`"></v-checkbox></center>
             </v-flex>
             <v-flex xs4 sm4 md4 id="Point">
-                <center><v-checkbox v-model="checkbox" :label="`Point`"></v-checkbox></center>
+                <center><v-checkbox v-model="point" :label="`Point`"></v-checkbox></center>
             </v-flex>
              <v-flex xs4 sm4 md4 id="Clink">
-                <center><v-checkbox v-model="checkbox" :label="`Clink`"></v-checkbox></center>
+                <center><v-checkbox v-model="clink" :label="`Clink`"></v-checkbox></center>
             </v-flex>
              <v-flex xs4 sm4 md4 id="Dunk">
-                <center><v-checkbox v-model="checkbox" :label="`Dunk`"></v-checkbox></center>
+                <center><v-checkbox v-model="dunk" :label="`Dunk`"></v-checkbox></center>
             </v-flex>
             
             <v-flex xs4 sm4 md4 id="catchDropDown">
-                <center><v-select :items="items" label="Who Caught?" solo></v-select></center>
+                <center><v-select 
+                            v-model="selectedCatch" 
+                            :items="items" 
+                            label="Who Caught?" solo></v-select></center>
             </v-flex>
 
             <!-- Submit button -->
-            <v-btn id="submit">Submit</v-btn>
+            <v-btn id="submit" @click="submitStats()">Submit</v-btn>
         </v-layout>
   
         <!-- Holds the scores for each team viewable at the bottom of the page -->
@@ -43,13 +46,48 @@
     </v-container>
 </template>
 
-<script>
+<script> 
+  import axios from 'axios';  
   export default {
     //   dummy data
     data: () => ({
         // item container that is the list in the dropdown box for which player caught the die
         items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+        selectedCatch: null
     }),
+    methods:{
+        submitStats() {
+            localStorage.setItem('catcher', this.selectedCatch)
+            axios.post("http://127.0.0.1:8000/enterStats/", {
+                team: localStorage.getItem('team'),
+                player: localStorage.getItem('player'),
+                shot: this.shot,
+                tableHit: this.tablehit,
+                point: this.point,
+                clink: this.clink,
+                dunk: this.dunk,
+                catcher: localStorage.getItem('catcher'),
+
+            }, {headers: {'Content-Type': 'application/json'}}).then(response => {
+                if (response.data.response == true){
+                    /* REFRESH PAGE HERE WIPE LOCAL DATA */
+                    localStorage.setItem('team', '')
+                    localStorage.setItem('player', '')
+                    this.shot = false
+                    this.tablehit = false
+                    this.point = false
+                    this.clink = false
+                    this.dunk = false
+                    localStorage.setItem('catcher', '')
+                } else{
+                    /* ERROR MESSAGE */
+                    console.log("ERROR: Could not post")
+                }
+                    
+            })
+            window.location.reload()
+        }
+    },
   }
 </script>
 
