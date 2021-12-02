@@ -5,8 +5,8 @@
         <div class="hero">
           <h2>Bracket</h2> <br>
           <bracket :rounds="rounds">
-            <template slot="player">
-            Team Name
+            <template #player="{player}">
+            {{player.name}}
             </template>
           </bracket>
         </div>
@@ -22,25 +22,126 @@
       <h4>Listed below are all of the teams for {{ leagueName }} league!</h4><br>
       </v-row>
       <v-row>
-        <li v-for="team in leagueTeams" :key = "team.name">
-          {{team.name}}
-        </li>
+        <h1>{{teamlist}}</h1>
       </v-row>
     </v-container>
 
   </div>
 </template>
-
 <script>
   import axios from 'axios';
   import Vue from 'vue';
   import Bracket from "vue-tournament-bracket";
+    // headers to the leaderboard
+
+    export default {
+        components: {
+            Bracket
+        },
+        data: function() {
+          // returned data
+            return {
+                rounds: rounds,
+                headers: headers,
+                teams: teams,
+                leagueName: this.getLeagueName(),
+                teamlist: this.getTeamList(),// leagueTeams: this.userArray()
+                bob: "asda",
+            }
+        },
+        methods: {
+          // return league name and store to localstorage
+          getLeagueName() {
+            return(localStorage.getItem("leagueName"))
+          },
+          getTeamList(){
+            return(localStorage.getItem("teamlist"))
+          },
+          // array of all teams associated to league
+          teamArray() {
+            return(JSON.parse(localStorage.getItem("allTeamsFromleague")))
+          },
+          // get all teams associated to the league
+          getAllTeams(){
+              // POST request to /allLeagueUsers/
+              axios.post("http://127.0.0.1:8000/allLeagueUsers/", {
+                  leagueName: localStorage.getItem("leagueName")
+              }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+                  // if fail, notify user and redirect
+                  if (response.data.response == false){
+                      Vue.notify({
+                          position: "top center",
+                          group: "server",
+                          text: response.data.error,
+                          type: "error",
+                      })
+                      window.location.href = "http://localhost:8080/dashboard/home"
+                      return(undefined);
+                  }else{
+                      // successful response
+                      // redirect owner/user depeending on specific information
+                      if (response.data.startedStatus == 1 && localStorage.getItem("team") !== response.data.leagueOwner) window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
+                      if (response.data.startedStatus == 1 && localStorage.getItem("team") !== response.data.leagueOwner)
+                      Vue.notify({
+                          position: "top center",
+                          group: "server",
+                          text: "Retrieving new data...",
+                          type: "info",
+                      })
+                      localStorage.setItem("LeagueTeams", JSON.stringify(response.data.error))
+                      // *server* notification to refresh
+                      window.setTimeout(function () {
+                          Vue.notify({
+                            position: "top center",
+                            group: "server",
+                            text: "Refreshing page for possible server and client changes...",
+                            type: "success",
+                          })
+                      }, 5000)
+                      window.setTimeout(function () {
+                          window.location.reload()
+                      }, 7000)
+                  }
+              })
+          },
+        },
+        beforeMount() {
+          // Post request to recieve league information
+          axios.post("http://127.0.0.1:8000/allLeagueTeams/", {
+              leagueName: localStorage.getItem("leagueName")
+          }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+              if (response.data.response == false){
+                  console.log("help")
+              }else{
+                  //console.log(JSON.stringify(response.data.error))
+                  //localStorage.setItem("leagueTeams", JSON.stringify(response.data.error))
+                  localStorage.setItem("teamlist", JSON.stringify(response.data.leagueTeams))
+                  console.log(response.data.leagueTeams)
+              }
+          })
+          axios.post("https://cors-anywhere.herokuapp.com/https://jojxiao:VCT7Idz0hjI3DpWFu7LUVNc1pSR5q0l4GHXpbvcy@api.challonge.com/v1/tournaments", {
+                api_key: "VCT7Idz0hjI3DpWFu7LUVNc1pSR5q0l4GHXpbvcy",
+                tournament: {name: "Test"}
+            }, {headers: {'Content-Type': 'application/json'}}).then(function(response) {
+                console.log("plz")
+                if (response.data.response == false){
+                    console.log("help")
+                }else{
+                    console.log(response.data.leagueTeams)
+                }
+          })
+          this.teamLength = JSON.parse(localStorage.getItem("teamLength"))
+          // Create the teams map
+          for (var x = 0; x < JSON.parse(localStorage.getItem("teamLength")); x++){
+              this.teamMap.set(x, ["Team "+x,"",""])
+          }
+        },
+    }
     //Round of 8
     const rounds = [
         {
           games: [
               {
-
                   player1: { id: "1", name: "Competitor 1", winner: false },
                   player2: { id: "8", name: "Competitor 4", winner: true },
               },
@@ -88,7 +189,6 @@
           ]
         }
     ];
-    // headers to the leaderboard
     const headers= [
         {
           text: 'Team Name',
@@ -214,95 +314,6 @@
           p_point_p: 75,
         },
       ];
-
-    export default {
-        components: {
-            Bracket
-        },
-        data: function() {
-          // returned data
-            return {
-                rounds: rounds,
-                headers: headers,
-                teams: teams,
-                leagueName: this.getLeagueName(),
-                // leagueTeams: this.userArray()
-            }
-        },
-        methods: {
-          // return league name and store to localstorage
-          getLeagueName() {
-            return(localStorage.getItem("leagueName"))
-          },
-          // array of all teams associated to league
-          teamArray() {
-            return(JSON.parse(localStorage.getItem("allTeamsFromleague")))
-          },
-          // get all teams associated to the league
-          getAllTeams(){
-              // POST request to /allLeagueUsers/
-              axios.post("http://127.0.0.1:8000/allLeagueUsers/", {
-                  leagueName: localStorage.getItem("leagueName")
-              }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
-                  // if fail, notify user and redirect
-                  if (response.data.response == false){
-                      Vue.notify({
-                          position: "top center",
-                          group: "server",
-                          text: response.data.error,
-                          type: "error",
-                      })
-                      window.location.href = "http://localhost:8080/dashboard/home"
-                      return(undefined);
-                  }else{
-                      // successful response
-                      // redirect owner/user depeending on specific information
-                      if (response.data.startedStatus == 1 && localStorage.getItem("team") !== response.data.leagueOwner) window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
-                      if (response.data.startedStatus == 1 && localStorage.getItem("team") !== response.data.leagueOwner)
-                      Vue.notify({
-                          position: "top center",
-                          group: "server",
-                          text: "Retrieving new data...",
-                          type: "info",
-                      })
-                      localStorage.setItem("LeagueTeams", JSON.stringify(response.data.error))
-                      // *server* notification to refresh
-                      window.setTimeout(function () {
-                          Vue.notify({
-                            position: "top center",
-                            group: "server",
-                            text: "Refreshing page for possible server and client changes...",
-                            type: "success",
-                          })
-                      }, 5000)
-                      window.setTimeout(function () {
-                          window.location.reload()
-                      }, 7000)
-                  }
-              })
-          },
-        },
-        beforeMount() {
-          // Post request to recieve league information
-          axios.post("http://127.0.0.1:8000/allLeagueTeams/", {
-              leagueName: localStorage.getItem("leagueName")
-          }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
-              if (response.data.response == false){
-                  console.log("help")
-              }else{
-                  console.log(JSON.stringify(response.data.error))
-                  localStorage.setItem("LeagueTeams", JSON.stringify(response.data.error))
-                  
-              }
-          })
-          this.teamLength = JSON.parse(localStorage.getItem("teamLength"))
-          // Create the teams map
-          for (var x = 0; x < JSON.parse(localStorage.getItem("teamLength")); x++){
-              this.teamMap.set(x, ["Team "+x,"",""])
-          }
-        }
-      
-    }
 </script>
 
 <style scoped>

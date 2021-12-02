@@ -171,7 +171,7 @@ class addTeamToLeague(APIView):
             currentTeam.save()
             league = League.objects.get(ownerUsername=request.data['ownerUsername'])    
             league.allTeams.add(currentTeam)
-            print("YES?5")
+            #print(league.allTeams.all())
             return Response(data={"response": True, "error": "Successfully added the team"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -187,12 +187,12 @@ class GetActiveTeamsInLeague(APIView):
             else:
                 #returns all teams of the league
                 teamsInLeague = []
-                # for x in League.objects.get(leagueName=request.data['leagueName']).teamsInLeague.all():
-                #     teamsInLeague.append(x)
-                # league = League.objects.get(ownerUsername=request.data['ownerUsername'])    
-                # teamsInLeague = league.allTeams
-                teamsInLeague = League.objects.get(leagueName=request.data['leagueName']).allTeams.all()
-                return Response(data={"response": True, "error": allTeams})
+                #teamsInLeague = League.objects.get(leagueName=request.data['leagueName']).allTeams.all()
+                #teamsInLeague.values() -> <QuerySet [{'id': 1, 'name': 'TEAMONE', 'user1_id': UUID('4b7235cf-12da-49b0-8b75-497b47b66116'), 'user2_id': UUID('8d4e9ec9-484f-455e-998d-8112c5248b73')}]>
+                for x in League.objects.get(leagueName=request.data['leagueName']).allTeams.all():
+                    teamsInLeague.append([x.id,x.name, x.user1_id, x.user2_id])
+                print(teamsInLeague)
+                return Response(data={"response": True, "error": "hi", "leagueTeams": teamsInLeague})    
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Deletes a league
