@@ -119,17 +119,17 @@
                   console.log(response.data.leagueTeams)
               }
           })
-          axios.post("https://cors-anywhere.herokuapp.com/https://jojxiao:VCT7Idz0hjI3DpWFu7LUVNc1pSR5q0l4GHXpbvcy@api.challonge.com/v1/tournaments", {
-                api_key: "VCT7Idz0hjI3DpWFu7LUVNc1pSR5q0l4GHXpbvcy",
-                tournament: {name: "Test"}
-            }, {headers: {'Content-Type': 'application/json'}}).then(function(response) {
-                console.log("plz")
-                if (response.data.response == false){
-                    console.log("help")
-                }else{
-                    console.log(response.data.leagueTeams)
-                }
-          })
+          // axios.post("https://crossorigin.me/https://jojxiao:VCT7Idz0hjI3DpWFu7LUVNc1pSR5q0l4GHXpbvcy@api.challonge.com/v1/tournaments", {
+          //       api_key: "VCT7Idz0hjI3DpWFu7LUVNc1pSR5q0l4GHXpbvcy",
+          //       tournament: {name: "NishantCools"}
+          //   }, {headers: {'Content-Type': 'application/json'}}).then(function(response) {
+          //       console.log("plz")
+          //       if (response.data.response == false){
+          //           console.log("help")
+          //       }else{
+          //           console.log(response.data.leagueTeams)
+          //       }
+          // })
           this.teamLength = JSON.parse(localStorage.getItem("teamLength"))
           // Create the teams map
           for (var x = 0; x < JSON.parse(localStorage.getItem("teamLength")); x++){

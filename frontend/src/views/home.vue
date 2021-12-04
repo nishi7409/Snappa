@@ -7,6 +7,7 @@
         <div class="hero">
           <div class="backgroundPicture"></div>
           <h1 class="headerSnappa">All Things Snappa</h1>
+            <v-btn id="test" @click="test()">Submit League</v-btn>
         </div>
       </v-row>
     </v-container>
@@ -17,7 +18,7 @@
   export default {
     name: 'Home',
     components: {
-    }
+    },
   }
 </script>
 

@@ -8,9 +8,9 @@
             <v-flex xs4 sm4 md4 id="dataInput2">
                 <center>
                     <v-text-field v-model="leagueName" name="leagueName" label="Enter League Name"></v-text-field>
-                    <span id="bracketOptions">Bracket Options</span>
-                    <v-checkbox v-model="checkbox" :label="`Randomized`"></v-checkbox>
-                    <v-checkbox v-model="checkbox" :label="`Custom`"></v-checkbox>
+                    <!-- <span id="bracketOptions">Bracket Options</span> -->
+                    <!-- <v-checkbox v-model="checkbox" :label="`Randomized`"></v-checkbox>
+                    <v-checkbox v-model="checkbox" :label="`Custom`"></v-checkbox> -->
                     <v-btn id="submitLeague" @click="submitLeague()">Submit League</v-btn>
                 </center>
             </v-flex>
