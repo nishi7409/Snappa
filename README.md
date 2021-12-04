@@ -45,5 +45,6 @@ https://drive.google.com/file/d/1tptG2AVWkjq09E9yjmtcZ7dh78kLUUBI/view
 3. `cd` to `/server/`
 4. Run `pip install -r requirements.txt`
 5. Run `python manage.py makemigrations` (if python doesn't exist, try `python3`)
-5. Run `python manage.py migrate` (if python doesn't exist, try `python3`)
-5. Run `python manage.py runserver` (if python doesn't exist, try `python3`)
+6. Run `python manage.py migrate` (if python doesn't exist, try `python3`)
+7. Run `python manage.py migrate --run-syncdb` (if python doesn't exist, try `python3`)
+8. Run `python manage.py runserver` (if python doesn't exist, try `python3`)

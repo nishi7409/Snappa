@@ -196,6 +196,7 @@
                       text: "Retrieving new data...",
                       type: "info",
                   })
+                  console.log(response.data.error)
                   localStorage.setItem("usernames", JSON.stringify(response.data.error))
                   // *server* notification to refresh
                   window.setTimeout(function () {
