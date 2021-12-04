@@ -3,12 +3,8 @@
     <v-container>
       <v-row>
         <div class="hero">
-          <h2>Bracket</h2> <br>
-          <bracket :rounds="rounds">
-            <template #player="{player}">
-            {{player.name}}
-            </template>
-          </bracket>
+          <h2>{{leagueName}} Bracket</h2> <br>
+            <iframe class = "bracketframe" src="http://challonge.com/687vwo2/module" width="1140" height="500" frameborder="1" scrolling="auto" allowtransparency="true"></iframe>
         </div>
       </v-row>
       <v-row>
@@ -23,6 +19,7 @@
       </v-row>
       <v-row>
         <h1>{{teamlist}}</h1>
+        
       </v-row>
     </v-container>
 
@@ -31,12 +28,12 @@
 <script>
   import axios from 'axios';
   import Vue from 'vue';
-  import Bracket from "vue-tournament-bracket";
+  //import Bracket from "vue-tournament-bracket";
     // headers to the leaderboard
 
     export default {
         components: {
-            Bracket
+            //Bracket
         },
         data: function() {
           // returned data
@@ -335,6 +332,17 @@
     transform: translate( -50%, 0% );
     font-size: 8vh;
   }
+  
+  .bracketcard{
+    left: 0%;
+    color: white;
+  }
 
+  .bracketframe{
+    border-radius: 20px;
+    border-width: 20px;
+    border-color:#2b344d;
+    border-style: solid
+  }
   
 </style>
