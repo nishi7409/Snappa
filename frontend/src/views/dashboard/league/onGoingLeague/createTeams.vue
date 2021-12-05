@@ -167,7 +167,6 @@ export default {
                         return(undefined);
                     }else{
                         console.log(response.data.error)
-                        this.addTeamToLeague(this.teamMap.get(y)[0], localStorage.getItem("challongeLeagueID"))
                     }
                 })
             }
@@ -176,6 +175,19 @@ export default {
             for (var i = 0; i < bulkTeamNames.length; i++) {
                 participantList.push({"name" : bulkTeamNames[i], "misc": "optional field"})
             }
+
+            // make call to api (snappa api) that saves data to league
+            setTimeout(function() {
+                axios.post(`http://127.0.0.1:8000/saveChallongeData`, {
+                    leagueName: localStorage.getItem("leagueName"),
+                    challongeID: localStorage.getItem("challongeLeagueID"),
+                    challongeURL: localStorage.getItem("challongeURLForEmbed"),
+                }, {headers: {'Content-Type': 'application/json'}}).then(function(response) {
+                    if (response.status == 200) {
+                        console.log("Added challonge info to league")
+                    }
+                })
+            }, 3000)
 
             setTimeout(function () {
                 axios.post(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${localStorage.getItem('challongeLeagueID')}/participants/bulk_add.json`, {
@@ -186,7 +198,7 @@ export default {
                         console.log("added team")
                     }
                 })
-            }, 3000)
+            }, 5000)
             
             setTimeout(function () {
                 axios.post(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${localStorage.getItem('challongeLeagueID')}/participants/randomize.json`, {
@@ -198,7 +210,7 @@ export default {
                         console.log(response)
                     }
                 })
-            }, 5000)
+            }, 7000)
 
             setTimeout(function () {
                 axios.post(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${localStorage.getItem('challongeLeagueID')}/start.json`, {
@@ -211,12 +223,12 @@ export default {
                         console.log("didn't start :(")
                     }
                 })
-            }, 7000)
+            }, 9000)
             
             console.log("DONE")
             setTimeout(function () {
                 window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
-            }, 13000)
+            }, 15000)
         },
         
         // Takes users from the localstorage

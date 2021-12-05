@@ -191,8 +191,14 @@ class GetActiveTeamsInLeague(APIView):
                 #teamsInLeague.values() -> <QuerySet [{'id': 1, 'name': 'TEAMONE', 'user1_id': UUID('4b7235cf-12da-49b0-8b75-497b47b66116'), 'user2_id': UUID('8d4e9ec9-484f-455e-998d-8112c5248b73')}]>
                 for x in League.objects.get(leagueName=request.data['leagueName']).allTeams.all():
                     teamsInLeague.append([x.id,x.name, x.user1_id, x.user2_id])
+                
+                currLeague = League.objects.get(leagueName=request.data['leagueName'])
+                challongeID = currLeague.challongeID
+                challongeURL = currLeague.challongeURL
+                leagueOwnerUsername = currLeague.ownerUsername
+                
                 print(teamsInLeague)
-                return Response(data={"response": True, "error": "hi", "leagueTeams": teamsInLeague})    
+                return Response(data={"response": True, "leagueOwnerUsername": leagueOwnerUsername, "leagueTeams": teamsInLeague, "challongeID": challongeID, "challongeURL": challongeURL})    
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Deletes a league
@@ -211,7 +217,6 @@ class DeleteLeague(APIView):
 
 class enterStats(APIView):
     def post(self, request, format=None):
-        
         serializer = enterStatsSerializer(data=request.data)
         if serializer.is_valid():
             if (len(Team.objects.filter(name = request.data['team'])) == 0):
@@ -236,3 +241,17 @@ class enterStats(APIView):
 
             return Response(data={"response": True})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class saveChallongeData(APIView):
+    def post(self, request, format=None):
+        serializer = challongeDataSaverSerializer(data=request.data)
+        if serializer.is_valid():
+            currentLeague = League.objects.get(leagueName=request.data['leagueName'])
+            print("Challonge ID --> ")
+            print(request.data['challongeID'])
+            currentLeague.challongeID = request.data['challongeID']
+            currentLeague.challongeURL = request.data['challongeURL']
+            currentLeague.save()
+            return Response(data={"response": True})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

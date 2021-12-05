@@ -98,3 +98,12 @@ class enterStatsSerializer(serializers.ModelSerializer):
             "dunk",
             "catcher"
         ]
+
+class challongeDataSaverSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = League
+        fields = ["leagueName"]
+        extra_kwargs = {
+            "challongeID": {"required": True},
+            "challongeURL": {"required": True}
+        }

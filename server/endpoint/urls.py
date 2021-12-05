@@ -18,4 +18,5 @@ urlpatterns = [
     path('addTeamToLeague/', addTeamToLeague.as_view()),
     path('allLeagueTeams/', GetActiveTeamsInLeague.as_view()),
     path('enterStats/', enterStats.as_view()),
+    path('saveChallongeData', saveChallongeData.as_view())
 ]

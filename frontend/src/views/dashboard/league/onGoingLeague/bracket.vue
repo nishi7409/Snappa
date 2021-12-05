@@ -4,7 +4,7 @@
       <v-row>
         <div class="hero">
           <h2>{{leagueName}} Bracket</h2> <br>
-            <iframe class = "bracketframe" src="http://challonge.com/687vwo2/module" width="1140" height="500" frameborder="1" scrolling="auto" allowtransparency="true"></iframe>
+            <iframe class = "bracketframe" :src="challongeURL" width="1140" height="500" frameborder="1" scrolling="auto" allowtransparency="true"></iframe>
         </div>
       </v-row>
       <v-row>
@@ -13,13 +13,12 @@
         </v-data-table>
       </v-row>
     </v-container>
-    <v-container>
+    <v-container v-if="isOwner == true">
       <v-row>
-      <h4>Listed below are all of the teams for {{ leagueName }} league!</h4><br>
+        <v-btn small color="success" v-on:click="getAllMatches()">Grab all matches</v-btn>
       </v-row>
       <v-row>
-        <h1>{{teamlist}}</h1>
-        
+        <h4>Listed below are direct links to referee each of the games above!</h4><br>
       </v-row>
     </v-container>
 
@@ -28,9 +27,6 @@
 <script>
   import axios from 'axios';
   import Vue from 'vue';
-  //import Bracket from "vue-tournament-bracket";
-    // headers to the leaderboard
-
     export default {
         components: {
             //Bracket
@@ -38,15 +34,27 @@
         data: function() {
           // returned data
             return {
+                isOwner: this.getIsOwner(),
                 rounds: rounds,
                 headers: headers,
                 teams: teams,
                 leagueName: this.getLeagueName(),
                 teamlist: this.getTeamList(),// leagueTeams: this.userArray()
-                bob: "asda",
+                challongeURL: this.getChallongeURL(),
+                allMatches: this.getAllMatches(),
             }
         },
         methods: {
+          // check if current user is owner
+          getIsOwner() {
+            console.log(localStorage.getItem("username") === localStorage.getItem("leagueOwnerUsername"))
+            return(localStorage.getItem("username") === localStorage.getItem("leagueOwnerUsername"))
+          },
+          // return challonge data
+          getChallongeURL() {
+            var challongeURL = "http://challonge.com/" + localStorage.getItem("challongeURL") + "/module"
+            return(challongeURL)
+          },
           // return league name and store to localstorage
           getLeagueName() {
             return(localStorage.getItem("leagueName"))
@@ -57,6 +65,17 @@
           // array of all teams associated to league
           teamArray() {
             return(JSON.parse(localStorage.getItem("allTeamsFromleague")))
+          },
+          // return all matches if owner
+          getAllMatches() {
+            var specialID = localStorage.getItem("challongeID")
+            axios.get(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${specialID}/matches.json`, {
+              api_key: "1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU",
+              include_matches: 1
+            }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
+              console.log(response)
+            })
+            return(undefined)
           },
           // get all teams associated to the league
           getAllTeams(){
@@ -113,20 +132,11 @@
                   //console.log(JSON.stringify(response.data.error))
                   //localStorage.setItem("leagueTeams", JSON.stringify(response.data.error))
                   localStorage.setItem("teamlist", JSON.stringify(response.data.leagueTeams))
-                  console.log(response.data.leagueTeams)
+                  localStorage.setItem("challongeID", response.data.challongeID)
+                  localStorage.setItem("challongeURL", response.data.challongeURL)
+                  localStorage.setItem("leagueOwnerUsername", response.data.leagueOwnerUsername)
               }
           })
-          // axios.post("https://crossorigin.me/https://jojxiao:VCT7Idz0hjI3DpWFu7LUVNc1pSR5q0l4GHXpbvcy@api.challonge.com/v1/tournaments", {
-          //       api_key: "VCT7Idz0hjI3DpWFu7LUVNc1pSR5q0l4GHXpbvcy",
-          //       tournament: {name: "NishantCools"}
-          //   }, {headers: {'Content-Type': 'application/json'}}).then(function(response) {
-          //       console.log("plz")
-          //       if (response.data.response == false){
-          //           console.log("help")
-          //       }else{
-          //           console.log(response.data.leagueTeams)
-          //       }
-          // })
           this.teamLength = JSON.parse(localStorage.getItem("teamLength"))
           // Create the teams map
           for (var x = 0; x < JSON.parse(localStorage.getItem("teamLength")); x++){
