@@ -15,10 +15,15 @@
     </v-container>
     <v-container v-if="isOwner == true">
       <v-row>
-        <v-btn small color="success" v-on:click="getAllMatches()">Grab all matches</v-btn>
+        <v-btn small color="success" v-on:click="refreshPage()">Refresh matches</v-btn>
       </v-row>
       <v-row>
         <h4>Listed below are direct links to referee each of the games above!</h4><br>
+      </v-row>
+      <v-row>
+        <br><h4>{{allMatches}}</h4><br>
+        <v-data-table dense :headers="matchHeaders" :items="gameDirectLinks" item-key="name" class="elevation-1">
+        </v-data-table>
       </v-row>
     </v-container>
 
@@ -42,12 +47,35 @@
                 teamlist: this.getTeamList(),// leagueTeams: this.userArray()
                 challongeURL: this.getChallongeURL(),
                 allMatches: this.getAllMatches(),
+                matchHeaders: [
+                  {text: 'Game #', align: 'start', sortable: false, value: 'id'},
+                  {text: 'Referee Link', align: 'start', sortable: false, value: 'link'},
+                ],
+                gameDirectLinks: this.generateLinks()
             }
         },
         methods: {
+          generateLinks() {
+            // var linkArray = []
+            var allMatches = this.getAllMatches()
+            console.log(allMatches)
+            console.log(allMatches.length)
+            // var size = Object.keys(allMatches)[0]
+            return(allMatches.length)
+            // for (var x = 0; x < allMatches.length; x++) {
+            //   console.log(x)
+            //   linkArray.push({id: x+1, link: 'hi'}) 
+            // }
+            // console.log(linkArray)
+            // return(linkArray)
+          },
+          // refresh links
+          refreshPage() {
+            location.reload()
+            return(undefined)
+          },
           // check if current user is owner
           getIsOwner() {
-            console.log(localStorage.getItem("username") === localStorage.getItem("leagueOwnerUsername"))
             return(localStorage.getItem("username") === localStorage.getItem("leagueOwnerUsername"))
           },
           // return challonge data
@@ -68,14 +96,23 @@
           },
           // return all matches if owner
           getAllMatches() {
-            var specialID = localStorage.getItem("challongeID")
+            var matchData = []
+            var matchIDs = []
+            var specialID = localStorage.getItem("challongeURL")
             axios.get(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${specialID}/matches.json`, {
-              api_key: "1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU",
-              include_matches: 1
-            }, {headers: {'Content-Type': 'application/json'}}).then(function (response) {
-              console.log(response)
+              params: {
+                api_key: "1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU",
+                state: "all"
+              }
+            }).then(function (response) {
+              for (var x = 0; x < response.data.length; x++){
+                matchData.push({"id": response.data[x].match.id, "player1": response.data[x].match.player1_id, "player2": response.data[x].match.player2_id, "state": response.data[x].match.state, "winner": response.data[x].match.winner_id, "loser": response.data[x].match.loser_id, "finishedAt": response.data[x].match.completed_at})
+                matchIDs.push(response.data[x].match.id)
+              }
+              localStorage.setItem("matchData", matchIDs)
+              return(matchData)
             })
-            return(undefined)
+            return(matchData)
           },
           // get all teams associated to the league
           getAllTeams(){
@@ -129,8 +166,7 @@
               if (response.data.response == false){
                   console.log("help")
               }else{
-                  //console.log(JSON.stringify(response.data.error))
-                  //localStorage.setItem("leagueTeams", JSON.stringify(response.data.error))
+                  // localStorage.setItem("leagueTeams", JSON.stringify(response.data.error))
                   localStorage.setItem("teamlist", JSON.stringify(response.data.leagueTeams))
                   localStorage.setItem("challongeID", response.data.challongeID)
                   localStorage.setItem("challongeURL", response.data.challongeURL)
@@ -142,6 +178,7 @@
           for (var x = 0; x < JSON.parse(localStorage.getItem("teamLength")); x++){
               this.teamMap.set(x, ["Team "+x,"",""])
           }
+          this.getAllMatches()
         },
     }
     //Round of 8
