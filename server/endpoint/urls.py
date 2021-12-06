@@ -16,5 +16,10 @@ urlpatterns = [
     path('submitLeague/', SubmitLeague.as_view()),
     path('deleteLeague/', DeleteLeague.as_view()),
     path('addTeamToLeague/', addTeamToLeague.as_view()),
-    path('enterStats/', enterStats.as_view()),
+    path('allLeagueTeams/', GetActiveTeamsInLeague.as_view()),
+    # path('enterStats/', enterStats.as_view()),
+    path('saveChallongeData', saveChallongeData.as_view()),
+    path('saveMatchIDs', saveMatchIDs.as_view()),
+    path('matchData', getMatchData.as_view()),
+    path('gameData/', getGameDataForStatTracker.as_view())
 ]

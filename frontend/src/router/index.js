@@ -16,7 +16,9 @@ import Profile from "../views/dashboard/profile/profile.vue";
 import PageNotFound from "../views/404.vue";
 
 Vue.use(VueRouter)
+//var cors = require('cors')
 
+//Vue.use(cors()) // Use this after the variable declaration
 
 const routes = [
   {
@@ -181,6 +183,7 @@ router.beforeEach((to, from, next) => {
     next()
   }
 })
+
 
 
 export default router
