@@ -158,16 +158,16 @@ class SubmitLeague(APIView):
 class addTeamToLeague(APIView):
     def post(self, request, format=None):
         serializer = addTeamToLeagueSerializer(data=request.data)
-        print("YES?")
         if serializer.is_valid():
-            print("YES?2")
             if (len(League.objects.filter(ownerUsername=request.data['ownerUsername'])) == 0):
                 return Response(data={"response": False, "error": "This league doesn't exist"})
             if (len(Team.objects.filter(name=request.data['name'])) != 0):
                 return Response(data={"response": False, "error": "This team name is taken"})
-            print("YES?3")
+            gameScoreboard = GameScoreboard(totalPoints=0)
+            gameScoreboard.save()
             currentTeam = Team(name = str(request.data['name']), user1 = User.objects.get(username=str(request.data['user1'])), user2 = User.objects.get(username=str(request.data['user2'])))
-            print("YES?4")
+            currentTeam.save()
+            currentTeam.team1Scoreboard.add(gameScoreboard)
             currentTeam.save()
             league = League.objects.get(ownerUsername=request.data['ownerUsername'])    
             league.allTeams.add(currentTeam)
@@ -215,32 +215,32 @@ class DeleteLeague(APIView):
             return Response(data={"response": True, "error": "Deleted league owned by user"})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class enterStats(APIView):
-    def post(self, request, format=None):
-        serializer = enterStatsSerializer(data=request.data)
-        if serializer.is_valid():
-            if (len(Team.objects.filter(name = request.data['team'])) == 0):
-                return Response(data={"response": False})
+# class enterStats(APIView):
+#     def post(self, request, format=None):
+#         serializer = enterStatsSerializer(data=request.data)
+#         if serializer.is_valid():
+#             if (len(Team.objects.filter(name = request.data['team'])) == 0):
+#                 return Response(data={"response": False})
 
-            tmpTeam = Team.objects.get(name = request.data['team'])
-            if (tmpTeam.user1 == request.data['player']): 
-                tmpTeam.user1.stat2 += request.data['shot']
-                tmpTeam.user1.stat3 += request.data['tablehit']
-                tmpTeam.user1.stat4 += request.data['point']
-                tmpTeam.user1.stat5 += request.data['clink']
-                tmpTeam.user1.stat6 += request.data['dunk']
+#             tmpTeam = Team.objects.get(name = request.data['team'])
+#             if (tmpTeam.user1 == request.data['player']): 
+#                 tmpTeam.user1.stat2 += request.data['shot']
+#                 tmpTeam.user1.stat3 += request.data['tablehit']
+#                 tmpTeam.user1.stat4 += request.data['point']
+#                 tmpTeam.user1.stat5 += request.data['clink']
+#                 tmpTeam.user1.stat6 += request.data['dunk']
 
-            else:
-                tmpTeam.user2.stat2 += request.data['shot']
-                tmpTeam.user2.stat3 += request.data['tablehit']
-                tmpTeam.user2.stat4 += request.data['point']
-                tmpTeam.user2.stat5 += request.data['clink']
-                tmpTeam.user2.stat6 += request.data['dunk']
+#             else:
+#                 tmpTeam.user2.stat2 += request.data['shot']
+#                 tmpTeam.user2.stat3 += request.data['tablehit']
+#                 tmpTeam.user2.stat4 += request.data['point']
+#                 tmpTeam.user2.stat5 += request.data['clink']
+#                 tmpTeam.user2.stat6 += request.data['dunk']
             
-            tmpTeam.team1Scoreboard += request.data['point']
+#             tmpTeam.team1Scoreboard += request.data['point']
 
-            return Response(data={"response": True})
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#             return Response(data={"response": True})
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class saveChallongeData(APIView):
     def post(self, request, format=None):
@@ -255,3 +255,48 @@ class saveChallongeData(APIView):
             return Response(data={"response": True})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class saveMatchIDs(APIView):
+    def post(self, request, format=None):
+        serializer = matchIDSaverSerializer(data=request.data)
+        if serializer.is_valid():
+            currentLeague = League.objects.get(leagueName=request.data['leagueName'])
+            matchIDs = request.data['matchIDs']
+            teamObjects = []
+            print(matchIDs)
+            for y in currentLeague.allTeams.all():
+                teamObjects.append(y)
+            for x in matchIDs:
+                newGame = Game(gameID=int(x), team1=teamObjects[0], team2=teamObjects[1], winnerTeam="N/A")
+                newGame.save()
+                currentLeague.allGames.add(newGame)
+                currentLeague.save()
+            return Response(data={"response": True})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class getMatchData(APIView):
+    def post(self, request, format=None):
+        serializer = getMatchDataSerializer(data=request.data)
+        if serializer.is_valid():
+            currentLeague = League.objects.get(leagueName=request.data['leagueName'])
+            matchIDs = request.data['matchIDs']
+            teamObjects = []
+            print(matchIDs)
+            for y in currentLeague.allTeams.all():
+                teamObjects.append(y)
+            for x in matchIDs:
+                newGame = Game(gameID=int(x), team1=teamObjects[0], team2=teamObjects[1], winnerTeam="N/A")
+                newGame.save()
+                currentLeague.allGames.add(newGame)
+                currentLeague.save()
+            return Response(data={"response": True})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class getGameDataForStatTracker(APIView):
+    def post(self, request, format=None):
+        serializer = getGameDataSerializer(data=request.data)
+        if serializer.is_valid():
+            tempGameID = request.data['gameID']
+            currGame = Game.objects.get(gameID=tempGameID)
+            return Response(data={"response": True, "gameID": request.data['gameID'], "team1_name": currGame.team1.name, "team1_user1": currGame.team1.user1.username, "team1_user2": currGame.team1.user2.username, "team2_name": currGame.team2.name, "team2_user1": currGame.team2.user1.username, "team2_user2": currGame.team2.user2.username})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

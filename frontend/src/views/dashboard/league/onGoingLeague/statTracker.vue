@@ -1,98 +1,154 @@
 <template>
     <v-container fluid fill-height class="StatTracker">
-        <!-- Sets the top title text where the user can view which team is versing which -->
-        <center><span id="bracketOptions">TEAM vs TEAM</span></center>
-        <v-layout row wrap>
-
-            <!-- Here are the buttons and checkboxes that are in the middle of the page each have a seperate style associated -->
-            <v-text xs4 sm4 md4 id="Playing">
-                <span id="Player">Playing: Chris</span>
-            </v-text>
-            <v-flex xs4 sm4 md4 id="Shot">
-                <center><v-checkbox v-model="shot" :label="`Shot`"></v-checkbox></center>
-            </v-flex>
-            <v-flex xs4 sm4 md4 id="TableHit">
-                <center><v-checkbox v-model="tablehit" :label="`Table Hit`"></v-checkbox></center>
-            </v-flex>
-            <v-flex xs4 sm4 md4 id="Point">
-                <center><v-checkbox v-model="point" :label="`Point`"></v-checkbox></center>
-            </v-flex>
-             <v-flex xs4 sm4 md4 id="Clink">
-                <center><v-checkbox v-model="clink" :label="`Clink`"></v-checkbox></center>
-            </v-flex>
-             <v-flex xs4 sm4 md4 id="Dunk">
-                <center><v-checkbox v-model="dunk" :label="`Dunk`"></v-checkbox></center>
-            </v-flex>
-            
-            <v-flex xs4 sm4 md4 id="catchDropDown">
-                <center><v-select 
-                            v-model="selectedCatch" 
-                            :items="items" 
-                            label="Who Caught?" solo></v-select></center>
-            </v-flex>
-
-            <!-- Submit button -->
-            <v-btn id="submit" @click="submitStats()">Submit</v-btn>
-        </v-layout>
-  
-        <!-- Holds the scores for each team viewable at the bottom of the page -->
-        <v-container id="Score">
-            <span id="ScoreText">TEAM</span>
-        </v-container>
-        <v-container id="Score2">
-            <span id="ScoreText">TEAM</span>
-            
-        </v-container>
+        <v-row align="center" justify="center">
+            <center><h2><u>{{team1Name}} vs {{team2Name}}</u></h2></center>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <h3>Team Data - {{team1Name}}</h3>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <p>{{team1Player1}}</p>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <v-text-field label="shot" type="number"/>
+            <v-text-field label="table hit" type="number"/>
+            <v-text-field label="point" type="number"/>
+            <v-text-field label="clink" type="number"/>
+            <v-text-field label="dunk" type="number"/>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <p>{{team1Player2}}</p>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <v-text-field label="shot" type="number"/>
+            <v-text-field label="table hit" type="number"/>
+            <v-text-field label="point" type="number"/>
+            <v-text-field label="clink" type="number"/>
+            <v-text-field label="dunk" type="number"/>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <v-text-field label="total points" v-model="totalPoints1" type="number"/>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <h3>Team Data - {{team2Name}}</h3>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <p>{{team2Player1}}</p>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <v-text-field label="shot" type="number"/>
+            <v-text-field label="table hit" type="number"/>
+            <v-text-field label="point" type="number"/>
+            <v-text-field label="clink" type="number"/>
+            <v-text-field label="dunk" type="number"/>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <p>{{team2Player2}}</p>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <v-text-field label="shot" type="number"/>
+            <v-text-field label="table hit" type="number"/>
+            <v-text-field label="point" type="number"/>
+            <v-text-field label="clink" type="number"/>
+            <v-text-field label="dunk"  type="number"/>
+        </v-row>
+        <v-row align="left" justify="left" class="team1">
+            <v-text-field label="total points" v-model="totalPoints2" type="number"/>
+        </v-row>
+        <v-row align="center" justify="center" class="team1">
+            <v-btn small color="success" v-on:click="submit()">Submit Data</v-btn>
+        </v-row>
     </v-container>
 </template>
 
 <script> 
-  import axios from 'axios';  
-  export default {
-    //   dummy data
-    data: () => ({
-        // item container that is the list in the dropdown box for which player caught the die
-        items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-        selectedCatch: null
-    }),
-    methods:{
-        submitStats() {
-            localStorage.setItem('catcher', this.selectedCatch)
-            axios.post("http://127.0.0.1:8000/enterStats/", {
-                team: localStorage.getItem('team'),
-                player: localStorage.getItem('player'),
-                shot: this.shot,
-                tableHit: this.tablehit,
-                point: this.point,
-                clink: this.clink,
-                dunk: this.dunk,
-                catcher: localStorage.getItem('catcher'),
+    import axios from 'axios';  
+    export default {
+        data: function() {
+          // returned data
+            return {
+                items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+                selectedCatch: null,
+                team1Name: localStorage.getItem("team1_name"),
+                team1Player1: localStorage.getItem("team1_user1"),
+                team1Player2: localStorage.getItem("team1_user2"),
 
-            }, {headers: {'Content-Type': 'application/json'}}).then(response => {
-                if (response.data.response == true){
-                    /* REFRESH PAGE HERE WIPE LOCAL DATA */
-                    localStorage.setItem('team', '')
-                    localStorage.setItem('player', '')
-                    this.shot = false
-                    this.tablehit = false
-                    this.point = false
-                    this.clink = false
-                    this.dunk = false
-                    localStorage.setItem('catcher', '')
-                } else{
-                    /* ERROR MESSAGE */
-                    console.log("ERROR: Could not post")
+                team2Name: localStorage.getItem("team2_name"),
+                team2Player1: localStorage.getItem("team2_user1"),
+                team2Player2: localStorage.getItem("team2_user2"),
+                matchInfromation: "Match Summary"
+            }
+        },
+        methods:{
+            getTeam1Name() {
+                console.log(localStorage.getItem("team1_name"))
+                return(localStorage.getItem("team1_name"))
+            },
+            
+            getTeam2Name() {
+                return(localStorage.getItem("team2_name"))
+            },
+            submit() {
+                if (this.totalPoints1 > this.totalPoints2) {
+                    axios.put(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${localStorage.getItem("challongeURL")}/matches/${localStorage.getItem("matchData")}.json`, {
+                            api_key: "1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU",
+                            _method: "put",
+                            match: {
+                                scores_csv: "1-0,7-0",
+                                winner_id: localStorage.getItem("team1ID")
+                            }
+                        }).then(response => {
+                            console.log(response)
+                        }
+                    )
+                    console.log("DONE")
+                } else {
+                    axios.put(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${localStorage.getItem("challongeID")}/matches/${localStorage.getItem("matchData")}.json`, {
+                            api_key: "1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU",
+                            match: {
+                                scores_csv: "0-1,0-7",
+                                winner_id: localStorage.getItem("team2ID")
+                            }
+                        }).then(response => {
+                            console.log(response)
+                        }
+                    )
+                    console.log("DONE")
                 }
-                    
+            }
+        },
+        beforeMount() {
+            var specialID = localStorage.getItem("challongeURL")
+            axios.get(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${specialID}/matches.json`, {
+                params: {
+                    api_key: "1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU",
+                    state: "all"
+                }
+                }).then(function (response) {
+                    for (var x = 0; x < response.data.length; x++){
+                        this.matchInfromation = {"id": response.data[x].match.id, "player1": response.data[x].match.player1_id, "player2": response.data[x].match.player2_id, "state": response.data[x].match.state, "winner": response.data[x].match.winner_id, "loser": response.data[x].match.loser_id, "finishedAt": response.data[x].match.completed_at}
+                    }
+                    // localStorage.setItem("matchInformation", JSON.stringify({"id": response.data[x].match.id, "player1": response.data[x].match.player1_id, "player2": response.data[x].match.player2_id, "state": response.data[x].match.state, "winner": response.data[x].match.winner_id, "loser": response.data[x].match.loser_id, "finishedAt": response.data[x].match.completed_at}))
+                    console.log(response.data[x].match.player1_id)
+                }
+            )
+            axios.post("http://127.0.0.1:8000/gameData/", {
+                gameID: localStorage.getItem("matchData")
+            }, {headers: {'Content-Type': 'application/json'}}).then(response => {
+                localStorage.setItem("team1_name", response.data.team1_name)
+                localStorage.setItem("team1_user1", response.data.team1_user1)
+                localStorage.setItem("team1_user2", response.data.team1_user2)
+
+                localStorage.setItem("team2_name", response.data.team2_name)
+                localStorage.setItem("team2_user1", response.data.team2_user1)
+                localStorage.setItem("team2_user2", response.data.team2_user2)
             })
-            window.location.reload()
-        }
-    },
-  }
+        },
+    }
 </script>
 
 <style scoped>
-    #bracketOptions {
+    /* #bracketOptions {
         margin: 0;
         position: absolute;
         top: 25%;
@@ -209,6 +265,6 @@
         color: white;
         top: 48%;
         left:90%;
-    }
+    } */
 
 </style>

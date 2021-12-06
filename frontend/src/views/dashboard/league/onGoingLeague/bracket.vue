@@ -7,10 +7,9 @@
             <iframe class = "bracketframe" :src="challongeURL" width="1140" height="500" frameborder="1" scrolling="auto" allowtransparency="true"></iframe>
         </div>
       </v-row>
+    </v-container>
+    <v-container>
       <v-row>
-        <h3>Leaderboard</h3><br>
-        <v-data-table dense :headers="headers" :items="teams" item-key="name" class="elevation-1">
-        </v-data-table>
       </v-row>
     </v-container>
     <v-container v-if="isOwner == true">
@@ -21,7 +20,7 @@
         <h4>Listed below are direct links to referee each of the games above!</h4><br>
       </v-row>
       <v-row>
-        <br><h4>{{allMatches}}</h4><br>
+        <br><h4><a :href="refereeLink">Match #1</a></h4><br>
         <v-data-table dense :headers="matchHeaders" :items="gameDirectLinks" item-key="name" class="elevation-1">
         </v-data-table>
       </v-row>
@@ -51,23 +50,18 @@
                   {text: 'Game #', align: 'start', sortable: false, value: 'id'},
                   {text: 'Referee Link', align: 'start', sortable: false, value: 'link'},
                 ],
-                gameDirectLinks: this.generateLinks()
+                gameDirectLinks: this.generateLinks(),
+                refereeLink: this.directLink(),
             }
         },
         methods: {
+          directLink() {
+            return(`http://localhost:8080/dashboard/league/${localStorage.getItem('leagueName')}/bracket/${localStorage.getItem('matchData')}/statTracker`)
+          },
           generateLinks() {
             // var linkArray = []
             var allMatches = this.getAllMatches()
-            console.log(allMatches)
-            console.log(allMatches.length)
-            // var size = Object.keys(allMatches)[0]
             return(allMatches.length)
-            // for (var x = 0; x < allMatches.length; x++) {
-            //   console.log(x)
-            //   linkArray.push({id: x+1, link: 'hi'}) 
-            // }
-            // console.log(linkArray)
-            // return(linkArray)
           },
           // refresh links
           refreshPage() {
@@ -107,6 +101,8 @@
             }).then(function (response) {
               for (var x = 0; x < response.data.length; x++){
                 matchData.push({"id": response.data[x].match.id, "player1": response.data[x].match.player1_id, "player2": response.data[x].match.player2_id, "state": response.data[x].match.state, "winner": response.data[x].match.winner_id, "loser": response.data[x].match.loser_id, "finishedAt": response.data[x].match.completed_at})
+                localStorage.setItem("team1ID", response.data[x].match.player1_id)
+                localStorage.setItem("team2ID", response.data[x].match.player2_id)
                 matchIDs.push(response.data[x].match.id)
               }
               localStorage.setItem("matchData", matchIDs)

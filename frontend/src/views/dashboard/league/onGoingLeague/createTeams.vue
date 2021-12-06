@@ -225,10 +225,36 @@ export default {
                 })
             }, 9000)
             
-            console.log("DONE")
+            var matchIDs = []
             setTimeout(function () {
-                window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
-            }, 15000)
+                axios.get(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${localStorage.getItem('challongeLeagueID')}/matches.json`, {
+                params: {
+                    api_key: "1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU",
+                    state: "all"
+                }
+                }).then(function (response) {
+                    for (var x = 0; x < response.data.length; x++){
+                        matchIDs.push(response.data[x].match.id)
+                    }
+                })
+            }, 13000)
+            localStorage.setItem("allMatchIDs4Storage", JSON.stringify(matchIDs))
+
+            setTimeout(function() {
+                axios.post(`http://127.0.0.1:8000/saveMatchIDs`, {
+                    leagueName: localStorage.getItem("leagueName"),
+                    matchIDs: matchIDs,
+                }, {headers: {'Content-Type': 'application/json'}}).then(function(response) {
+                    if (response.status == 200) {
+                        console.log("Added data to league")
+                    }
+                })
+            }, 16000)
+
+            console.log("DONE")
+            // setTimeout(function () {
+            //     window.location.href = `http://localhost:8080/dashboard/league/${localStorage.getItem("leagueName")}/bracket`
+            // }, 20000)
         },
         
         // Takes users from the localstorage
