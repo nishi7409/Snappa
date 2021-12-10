@@ -94,8 +94,8 @@
                             api_key: "1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU",
                             _method: "put",
                             match: {
-                                scores_csv: "1-0,7-0",
-                                winner_id: localStorage.getItem("team1ID")
+                                scores_csv: "0-1,0-7",
+                                winner_id: localStorage.getItem("team2ID")
                             }
                         }).then(response => {
                             console.log(response)
@@ -106,8 +106,8 @@
                     axios.put(`https://calm-retreat-42630.herokuapp.com/https://nishi7409:1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU@api.challonge.com/v1/tournaments/${localStorage.getItem("challongeID")}/matches/${localStorage.getItem("matchData")}.json`, {
                             api_key: "1WVHeSGXHOaYXWyNfysXl1NduV4tsNDmgcrfY6hU",
                             match: {
-                                scores_csv: "0-1,0-7",
-                                winner_id: localStorage.getItem("team2ID")
+                                scores_csv: "1-0,7-0",
+                                winner_id: localStorage.getItem("team1-ID")
                             }
                         }).then(response => {
                             console.log(response)
