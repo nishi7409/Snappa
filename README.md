@@ -26,7 +26,8 @@ Our new and interactive web application will contain user-friendly features that
 https://drive.google.com/file/d/1o_fpSizzXChjeOOFMZjfQ919NSruJgVp/view
 ### Static Class Diagram
 https://drive.google.com/file/d/1tptG2AVWkjq09E9yjmtcZ7dh78kLUUBI/view
-### 
+### Video Demonstration
+https://drive.google.com/file/d/1sUFdSmS3bieMpVkwMPSdkduTO3teymdV/view?resourcekey
 
 ## Developmental Setup
 ### Frontend
